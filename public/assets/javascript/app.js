@@ -36,13 +36,7 @@
         // Redirect to profile page after login
         firebase.auth().onAuthStateChanged(user => {
           if (user) {
-            firebase.database().ref("bio").child(user.uid).update({
-              email: user.email,
-              photoURL: user.photoURL,
-              displayName: user.displayName
-            })
             window.location = "profile.html?uid=" + user.uid;
-
           }
         });
       }
@@ -73,11 +67,12 @@
     function addNewUser(user) {
       //create user Object
       var userObj = {
-        name: user.displayName,
+        displayName: user.displayName,
         email: user.email,
+        photoURL: user.photoURL,
         uid: user.uid,
         bio: "",
-        persona: "",
+        personal: "",
         listingIDs: ""
       }
 

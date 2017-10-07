@@ -31,7 +31,6 @@
 
         // Display a map on the page
         map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
-        map.setTilt(45);
 
         // Geolocation
         if (navigator.geolocation) {
@@ -39,6 +38,8 @@
                 initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
                 map.setCenter(initialLocation);
             });
+        } else {
+            map.setCenter(myLatlng1);
         }
 
         // Get the addresses from Firebase and push to an array
@@ -118,7 +119,7 @@
 
                     // On mouseout
                     google.maps.event.addListener(marker, 'mouseout', function() {
-                        infowindow.close();    
+                        infowindow.close();  
                     });    
 
                     infowindow2.setContent('<h3 class="mapInfo">'+ dataMaker[i].item + '</h3>' + '<p>Pick up your ' + dataMaker[i].item + ' here!</p>' );   

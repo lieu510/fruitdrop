@@ -256,7 +256,7 @@ $(document).ready(function() {
     $(document).on("click", "#fb-share", function() {
      FB.ui({
          method: 'share',
-         href: 'https://vmov031.github.io/fruitdrop/public/profile.html?uid=' + currentUser.uid,
+         href: 'https://gracepark.github.io/fruitdrop/public/profile.html?uid=' + currentUser.uid,
      }, function(response) {});
  });
    

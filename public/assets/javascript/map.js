@@ -62,12 +62,10 @@ var config = {
                     console.log("Geocode was not successful for the following reason: " + status);
                 } else {
 
-                    var point = results[0].geometry.location;
-
                     var i = dataMakerIndex;
                     var marker = new google.maps.Marker({
                         map: map,
-                        position: results[0].geometry.location
+                        position: {lat: dataMaker[i].lat, lng: dataMaker[i].long},
                     });
                     var infowindow = new google.maps.InfoWindow();
                     // create an infowindow2 

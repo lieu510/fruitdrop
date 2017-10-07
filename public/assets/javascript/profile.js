@@ -187,16 +187,13 @@ $(document).ready(function() {
             } else {
                 var latitude = results[0].geometry.location.lat();
                 var longitude = results[0].geometry.location.lng();
-                
+
                 firebase.database().ref("listings").child(newListing.key).update({
                     lat: latitude,
                     long: longitude
                 })
             }
         });
-
-        
-
 
         //add new listing to items list on firebase
         firebase.database().ref("items").child(item).push(newListing.key);

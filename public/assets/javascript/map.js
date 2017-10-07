@@ -46,13 +46,15 @@
         firebase.database().ref("listings").on("value", function(snapshot) {
 
             snapshot.forEach(function(childSnapshot) {
+
                 var add = childSnapshot.val();
                 dataMaker.push(add);
+
             });
             displayMarkers();
         });
-        function displayMarkers() {
 
+        function displayMarkers() {
             for(i = 0; i < dataMaker.length; i++) {
                 geocoder.geocode({'address': dataMaker[i].street + dataMaker[i].zipCode}, makeCallback(i));
             }
@@ -62,19 +64,9 @@
 
                 if (status !== google.maps.GeocoderStatus.OK) {
                     console.log("Geocode was not successful for the following reason: " + status);
-
                 } else {
                     var point = results[0].geometry.location;
-                    var latitude = results[0].geometry.location.lat();
-                    var longitude = results[0].geometry.location.lng();
 
-                    firebase.database().ref("listings").update({
-                        lat: latitude,
-                        long: longitude
-                    });
-
-                    console.log(latitude);
-                    console.log(longitude);
                     var i = dataMakerIndex;
                     var marker = new google.maps.Marker({
                         map: map,

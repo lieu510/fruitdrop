@@ -98,6 +98,7 @@ $(document).ready(function() {
     }
     // Display user's listings in profile
     function displayListings() {
+        $("#listings").empty();
         firebase.database().ref("listings").on("child_added", function(childSnapshot) {
             // check children apply to current user
             if (childSnapshot.child('uid').val() === currentUser.uid) {
@@ -122,17 +123,18 @@ $(document).ready(function() {
             $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
         });
         // Display user's listings in profile
-        firebase.database().ref("listings").on("child_added", function(childSnapshot) {
-            // check children apply to current user
-            if (childSnapshot.child('uid').val() === currentUser.uid) {
-                //add to profile
-                $("#listings").append("<tr><td>" + childSnapshot.val().item +
-                    "</td><td>" + childSnapshot.val().quantity +
-                    "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
-                    "</td><td>" + childSnapshot.val().date + "</td></tr>"
-                );
-            }
-
+        firebase.database().ref("listings").once("value").then(function(snapshot) {
+            snapshot.forEach(function(childSnapshot) {
+                // check children apply to current user
+                if (childSnapshot.child('uid').val() === currentUser.uid) {
+                    //add to profile
+                    $("#listings").append("<tr><td>" + childSnapshot.val().item +
+                        "</td><td>" + childSnapshot.val().quantity +
+                        "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
+                        "</td><td>" + childSnapshot.val().date + "</td></tr>"
+                    );
+                }
+            });
         });
     }
 
@@ -197,8 +199,15 @@ $(document).ready(function() {
 
         //add new listing to items list on firebase
         firebase.database().ref("items").child(item).push(newListing.key);
-
+        
+        $("#item").val("");
+        $("#quantity").val("");
+        $("#street").val("");
+        $("#zip-code").val("");
+        $("#date").val("");
         $('#addListing').modal('hide');
+
+        displayListings();
     });
 
     var listingId;
@@ -235,14 +244,8 @@ $(document).ready(function() {
             zipCode: zipCode,
             date: date,
         });
-
-        $("#item").empty();
-        $("#quantity").empty();
-        $("#street").empty();
-        $("#zip-code").empty();
-        $("#date").empty();
         $('#addListing').modal('hide');
-        $("#listings").empty();
+        
         displayListings();
     });
 
@@ -251,7 +254,7 @@ $(document).ready(function() {
         listingId = $(this).attr("data-id");
         // grab existing values from firebase
         firebase.database().ref("listings").child(listingId).remove();
-        $("#listings").empty();
+        
         displayListings();
     });
 

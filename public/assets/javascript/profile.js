@@ -155,8 +155,11 @@ $(document).ready(function() {
         $('#submit-edit').attr("id", "submit-add");
     });
 
+    
+
     // Submit form to add listing
     $(document).on("click", "#submit-add", function(event) {
+
         event.preventDefault();
 
         // Get the input values
@@ -172,8 +175,31 @@ $(document).ready(function() {
             street: street,
             zipCode: zipCode,
             date: date,
-            uid: currentUser.uid
+            uid: currentUser.uid,
+
         });
+        console.log(street);
+
+        var geocoder = new google.maps.Geocoder();
+        
+        geocoder.geocode({'address': street + zipCode}, function(results, status) {
+            if (status !== google.maps.GeocoderStatus.OK) {
+                console.log("Geocode was not successful for the following reason: " + status);
+            } else {
+                var latitude = results[0].geometry.location.lat();
+                var longitude = results[0].geometry.location.lng();
+
+                console.log(latitude);
+                console.log(longitude);
+                firebase.database().ref("listings").child(newListing.key).update({
+                    lat: latitude,
+                    long: longitude
+                })
+            }
+        });
+
+        
+
 
         //add new listing to items list on firebase
         firebase.database().ref("items").child(item).push(newListing.key);

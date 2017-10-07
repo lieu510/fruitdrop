@@ -178,7 +178,6 @@ $(document).ready(function() {
             uid: currentUser.uid,
 
         });
-        console.log(street);
 
         var geocoder = new google.maps.Geocoder();
         
@@ -188,9 +187,7 @@ $(document).ready(function() {
             } else {
                 var latitude = results[0].geometry.location.lat();
                 var longitude = results[0].geometry.location.lng();
-
-                console.log(latitude);
-                console.log(longitude);
+                
                 firebase.database().ref("listings").child(newListing.key).update({
                     lat: latitude,
                     long: longitude

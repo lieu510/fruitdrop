@@ -10,6 +10,19 @@ var config = {
 firebase.initializeApp(config);
 
 $(document).ready(function() {
+  $.ajaxSetup({ cache: true });
+  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+    FB.init({
+      appId: '303697393443959',
+      version: 'v2.7' // or v2.1, v2.2, v2.3, ...
+    });     
+    $('#loginbutton,#feedbutton').removeAttr('disabled');
+    FB.getLoginStatus(updateStatusCallback);
+  });
+});
+
+
+$(document).ready(function() {
 
     function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -34,7 +47,7 @@ $(document).ready(function() {
                 currentUser = firebase.auth().currentUser;
                 displaySelfInfo();
             } else {
-                firebase.database().ref("users").child(uid).once("value").then(function(snapshot) {
+                firebase.database().ref("bio").child(uid).once("value").then(function(snapshot) {
                     currentUser = {
                         uid: uid,
                         photoURL: snapshot.val().photoURL,
@@ -46,18 +59,31 @@ $(document).ready(function() {
                 $("#edit-profile").css("display", "none");
                 $("#add").css("display", "none");
             }
+
+            $("#profile-pic").attr("src", currentUser.photoURL);
+            $("#profile-name").text(currentUser.displayName);
+            firebase.database().ref("bio").child(currentUser.uid).on("child_added", function(childSnapshot) {
+                $("#bio").text(childSnapshot.val().bio);
+                $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
+            });
+            // Display user's listings in profile and to Firebase
+            firebase.database().ref("listings").child(currentUser.uid).on("child_added", function(childSnapshot) {
+                //add to firebase
+                var newItem = childSnapshot.child('item').val();
+                console.log("newitem: ", newItem);
+                if (newItem) {
+                    firebase.database().ref("items").child(newItem).push(childSnapshot.key);
+
+                }
+                //add to profile
+                $("#listings").append("<tr><td>" + childSnapshot.val().item +
+                    "</td><td>" + childSnapshot.val().quantity +
+                    "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
+                    "</td><td>" + childSnapshot.val().date + "</td></tr>");
+            });
         }
     });
-
-    // firebase.database().ref("listings").child(user.uid).on('child_added', function(childSnapshot, prevChildKey) {
-    //     var newItem = childSnapshot.child('item').val();
-    //     console.log("newitem: ", newItem);
-    //     if (newItem) {
-    //         firebase.database().ref("items").child(newItem).push(childSnapshot.key());
-
-    //     }
-    // });
-
+  
     function displaySelfInfo() {
         $("#profile-pic").attr("src", currentUser.photoURL);
         $("#profile-name").text(currentUser.displayName);
@@ -87,7 +113,6 @@ $(document).ready(function() {
             }
         });
     }
-
     function displayInfo() {
         $("#profile-pic").attr("src", currentUser.photoURL);
         $("#profile-name").text(currentUser.displayName);
@@ -110,6 +135,7 @@ $(document).ready(function() {
 
         });
     }
+
 
     function logout() {
         firebase.auth().signOut().then(function() {
@@ -220,10 +246,18 @@ $(document).ready(function() {
         var bio = $("#user-bio").val().trim();
         var personalSite = $("#personal").val().trim();
 
-        firebase.database().ref("users").child(currentUser.uid).update({
+        firebase.database().ref("bio").child(currentUser.uid).update({
             bio: bio,
             personal: personalSite
         })
         $("#profile-new").modal("hide");
     });
+     // Facebook Share button
+    $(document).on("click", "#fb-share", function() {
+     FB.ui({
+         method: 'share',
+         href: 'https://vmov031.github.io/fruitdrop/public/profile.html?uid=' + currentUser.uid,
+     }, function(response) {});
+ });
+   
 });

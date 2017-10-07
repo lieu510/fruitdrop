@@ -49,7 +49,6 @@ var config = {
             });
             displayMarkers();
         });
-        console.log(dataMaker);
 
         function displayMarkers() {
             for(i = 0; i < dataMaker.length; i++) {
@@ -62,8 +61,6 @@ var config = {
                 if (status !== google.maps.GeocoderStatus.OK) {
                     console.log("Geocode was not successful for the following reason: " + status);
                 } else {
-
-                    // var point = results[0].geometry.location;
 
                     var i = dataMakerIndex;
                     var marker = new google.maps.Marker({

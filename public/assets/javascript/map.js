@@ -1,21 +1,17 @@
-    // Initialize Firebase
-    var config = {
-        apiKey: "AIzaSyCFPYDY47Q6bxwSlbIS7PFpGKFmIId0ZhU",
-        authDomain: "fruit-drop-1506557698689.firebaseapp.com",
-        databaseURL: "https://fruit-drop-1506557698689.firebaseio.com",
-        projectId: "fruit-drop-1506557698689",
-        storageBucket: "fruit-drop-1506557698689.appspot.com",
-        messagingSenderId: "425209410204"
-    };
-    firebase.initializeApp(config);
+// Initialize Firebase
+var config = {
+    apiKey: "AIzaSyCFPYDY47Q6bxwSlbIS7PFpGKFmIId0ZhU",
+    authDomain: "fruit-drop-1506557698689.firebaseapp.com",
+    databaseURL: "https://fruit-drop-1506557698689.firebaseio.com",
+    projectId: "fruit-drop-1506557698689",
+    storageBucket: "fruit-drop-1506557698689.appspot.com",
+    messagingSenderId: "425209410204"
+};
 
-    var provider = new firebase.auth.GoogleAuthProvider();
-    var user;
-    var currentUser;
-    var activeInfoWindow;
     // Map Page
 
     function initMap() {
+        var activeInfoWindow;
         var geocoder = new google.maps.Geocoder();
         var map;
         var infoWindowContent = [];
@@ -65,6 +61,7 @@
                 if (status !== google.maps.GeocoderStatus.OK) {
                     console.log("Geocode was not successful for the following reason: " + status);
                 } else {
+
                     var point = results[0].geometry.location;
 
                     var i = dataMakerIndex;

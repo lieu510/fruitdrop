@@ -40,7 +40,7 @@ var config = {
         var dataMaker = [];
 
         firebase.database().ref("listings").on("value", function(snapshot) {
-
+            console.log(snapshot.val());
             snapshot.forEach(function(childSnapshot) {
 
                 var add = childSnapshot.val();

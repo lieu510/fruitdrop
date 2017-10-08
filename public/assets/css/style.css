@@ -62,7 +62,6 @@ footer.footer {
 	font-size: 1.5em;
 	margin-bottom: 1em;
 	background-color: transparent;
-	position: static;
 }
 
 /*Header for all pages except Index*/
@@ -100,11 +99,20 @@ footer.footer {
 input.form-control:focus {
 	border-color: #f55859;
 }
-.navbar li.nav-item:last-child {
+.navbar li.nav-item {
 	margin-left: 2em;
 }
-.navbar li.nav-item:last-child a:hover {
+
+a.nav-link:hover, .navbar li.nav-item:last-child a:hover {
 	color: #f55859;
+}
+
+div.collapse.navbar-collapse.justify-content-end {
+	margin-bottom: 1.5em;
+}
+
+.home span.alt, .map span.alt, .profile span.alt, .faq span.alt {
+	letter-spacing: 0px;
 }
 
 /*Profile Page*/
@@ -122,6 +130,10 @@ body.profile {
 
 .profile .container-fluid {
 	margin-top: 7em;
+}
+
+.profile div.collapse.navbar-collapse.justify-content-end {
+	margin-bottom: 3.5em;
 }
 
 button.edit-listing, button.delete-listing {
@@ -145,7 +157,7 @@ body.home {
     padding-bottom: 20px;
 }
 
-#button1, #button2 {
+#button1, #button2, #button3 {
     border: none;
 }
 
@@ -177,7 +189,7 @@ body.home {
 
 .home .btn {
 	margin-left: 1.5em;
-	height: 3em;
+	height: 2.6em;
     margin-bottom: 0.6em;
     width: 6em;
 	background-color: transparent;
@@ -209,7 +221,7 @@ body.home {
 .home .search-input[type="text"]{
 	padding-left: 1em;
     font-weight: 300;
-    font-size: 2em;
+    font-size: 2vw;
     width: 25%;
 }
 
@@ -248,6 +260,10 @@ body.map {
     height: 80%;
 }
 
+h3.mapInfo, h3.mapInfo p {
+	text-align: center;
+}
+
 /*FAQ Page*/
 body.faq {
 	background: url("../images/pineapple-supply-co-124390.jpg") no-repeat center center;
@@ -260,15 +276,23 @@ body.faq {
     padding-bottom: 20px;
 }
 
+p.subheading {
+	font-size: 1.5em;
+}
+
+.faq div.collapse.navbar-collapse.justify-content-end {
+	margin-bottom: 3.5em;
+}
+
 .faq .faq-header h2 {
 	position: relative;
-	top: 5em;
+	top: 3.5em;
 	text-align: center;
 }
 
 .faq .faq-header p.subheading {
 	position: relative;
-	top: 10em;
+	top: 7em;
 	text-align: center;
 }
 
@@ -277,8 +301,20 @@ body.faq {
 	top: 12em;
 }
 
-
-
-h3.mapInfo, h3.mapInfo p {
-	text-align: center;
+.faq h2 {
+	font-size: 3em;
 }
+
+.faq h3 {
+	font-size: 2.5em;
+	margin-bottom: 1em;
+}
+
+.faq .faq-body li {
+	font-size: 2em;
+}
+.faq .faq-body p {
+	font-size: 1.5em;
+}
+
+

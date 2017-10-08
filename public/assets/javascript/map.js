@@ -98,7 +98,7 @@ var config = {
 
                     var userProfile = "https://gracepark.github.io/fruitdrop/public/profile.html?uid=" + dataMaker[i].uid;
 
-                    infowindow2.setContent('<h3 class="mapInfo">'+ dataMaker[i].item + '</h3>' + '<p>Pick up your ' + dataMaker[i].item + ' soon!</p>' + '<p>View Details: </p>' + '<a href="' + userProfile 
+                    infowindow2.setContent('<h3 class="mapInfo">'+ dataMaker[i].item + '</h3>' + '<p style="text-align: center">View Details: </p>' + 'You can find all the details to pick up your produce today by visiting the <a style="color: #f55859" href="' + userProfile 
                         + '">User Profile</a>' );   
 
                     // Open the infowindow

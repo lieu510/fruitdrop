@@ -1,28 +1,13 @@
-// Initialize Firebase
-var config = {
-    apiKey: "AIzaSyCFPYDY47Q6bxwSlbIS7PFpGKFmIId0ZhU",
-    authDomain: "fruit-drop-1506557698689.firebaseapp.com",
-    databaseURL: "https://fruit-drop-1506557698689.firebaseio.com",
-    projectId: "fruit-drop-1506557698689",
-    storageBucket: "fruit-drop-1506557698689.appspot.com",
-    messagingSenderId: "425209410204"
-};
-firebase.initializeApp(config);
-
 $(document).ready(function() {
-  $.ajaxSetup({ cache: true });
-  $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
-    FB.init({
-      appId: '303697393443959',
-      version: 'v2.7' // or v2.1, v2.2, v2.3, ...
-    });     
-    $('#loginbutton,#feedbutton').removeAttr('disabled');
-    FB.getLoginStatus(updateStatusCallback);
-  });
-});
-
-
-$(document).ready(function() {
+    $.ajaxSetup({ cache: true });
+    $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
+        FB.init({
+            appId: '303697393443959',
+            version: 'v2.7' // or v2.1, v2.2, v2.3, ...
+        });     
+        $('#loginbutton,#feedbutton').removeAttr('disabled');
+        FB.getLoginStatus(updateStatusCallback);
+    });
 
     function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -47,26 +32,22 @@ $(document).ready(function() {
                 currentUser = firebase.auth().currentUser;
                 displaySelfInfo();
             } else {
-                firebase.database().ref("users").child(uid).once("value").then(function(snapshot) {
-                    currentUser = {
-                        uid: uid,
-                        photoURL: snapshot.val().photoURL,
-                        displayName: snapshot.val().displayName,
-                        email: snapshot.val().email
-                    };
-                    displayInfo();
-                });
-                $("#edit-profile").css("display", "none");
-                $("#add").css("display", "none");
-                $("#button2").html("<a class='nav-link' id='profile-link' href='#'>Profile</a>");
+                displayInfo();
+                $("#button1").html("<a class='nav-link' id='profile-link' href='#'>Profile</a>");
                 $(document).on("click", "#profile-link", function() {
                     window.location = "profile.html?uid=" + user.uid;
                 });
             }
+        } else {
+            displayInfo();
         }
     });
-  
+    // display user's own profile
     function displaySelfInfo() {
+        $("#button1").html("<a class='nav-link' id='logout' href='#'>Logout</a>");
+        $(document).on("click", "#logout", function() {
+            logout();
+        });
         $("#profile-pic").attr("src", currentUser.photoURL);
         $("#profile-name").text(currentUser.displayName);
         $("#email").html(currentUser.email);
@@ -96,26 +77,37 @@ $(document).ready(function() {
             }
         });
     }
+    // display another user's profile
     function displayInfo() {
-        $("#profile-pic").attr("src", currentUser.photoURL);
-        $("#profile-name").text(currentUser.displayName);
-        $("#email").html("<a href='mailto:" + currentUser.email + "'>" + currentUser.email + "</a>");
-        firebase.database().ref("users").child(currentUser.uid).on("child_added", function(childSnapshot) {
-            $("#bio").text(childSnapshot.val().bio);
-            $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
-        });
-        // Display user's listings in profile
-        firebase.database().ref("listings").once("value").then(function(snapshot) {
-            snapshot.forEach(function(childSnapshot) {
-                // check children apply to current user
-                if (childSnapshot.child('uid').val() === currentUser.uid) {
-                    //add to profile
-                    $("#listings").append("<tr><td>" + childSnapshot.val().item +
-                        "</td><td>" + childSnapshot.val().quantity +
-                        "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
-                        "</td><td>" + childSnapshot.val().date + "</td></tr>"
-                    );
-                }
+        firebase.database().ref("users").child(uid).once("value").then(function(snapshot) {
+            currentUser = {
+                uid: uid,
+                photoURL: snapshot.val().photoURL,
+                displayName: snapshot.val().displayName,
+                email: snapshot.val().email
+            };
+            $("#edit-profile").css("display", "none");
+            $("#add").css("display", "none");
+            $("#profile-pic").attr("src", currentUser.photoURL);
+            $("#profile-name").text(currentUser.displayName);
+            $("#email").html("<a href='mailto:" + currentUser.email + "'>" + currentUser.email + "</a>");
+            firebase.database().ref("users").child(currentUser.uid).on("child_added", function(childSnapshot) {
+                $("#bio").text(childSnapshot.val().bio);
+                $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
+            });
+            // Display user's listings in profile
+            firebase.database().ref("listings").once("value").then(function(snapshot) {
+                snapshot.forEach(function(childSnapshot) {
+                    // check children apply to current user
+                    if (childSnapshot.child('uid').val() === currentUser.uid) {
+                        //add to profile
+                        $("#listings").append("<tr><td>" + childSnapshot.val().item +
+                            "</td><td>" + childSnapshot.val().quantity +
+                            "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
+                            "</td><td>" + childSnapshot.val().date + "</td></tr>"
+                        );
+                    }
+                });
             });
         });
     }

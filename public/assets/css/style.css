@@ -260,8 +260,13 @@ body.map {
     height: 80%;
 }
 
-h3.mapInfo, h3.mapInfo p {
+h3.mapInfo {
 	text-align: center;
+}
+
+.mapInfo a {
+	color: #f55859;
+    text-decoration: underline;
 }
 
 /*FAQ Page*/

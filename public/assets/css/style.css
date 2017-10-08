@@ -42,7 +42,7 @@ button {
 }
 
 #search {
-	margin-top: 5%;
+	margin-top: 15%;
 	margin-bottom: 20%;
 	text-align: center;
 }
@@ -191,7 +191,7 @@ body.home {
 
 .home .btn {
 	margin-left: 1.5em;
-	height: 2.7em;
+	height: 3em;
     margin-bottom: 0.6em;
     width: 6em;
 	background-color: transparent;
@@ -206,6 +206,17 @@ body.home {
 	border: 1px solid #f55859;
 }
 
+.home div#description {
+	font-family: 'Sacramento', cursive;
+	font-size: 6vw;
+	font-weight: bold;
+	text-align: center;
+	position: fixed;
+	bottom: 25%;
+	-ms-transform: rotate(-10deg); /* IE 9 */
+    -webkit-transform: rotate(-10deg); /* Safari */
+    transform: rotate(-10deg); /* Standard syntax */
+}
 .home .search-input {
 	font-family: 'Open Sans', sans-serif;
 	height: 2.2em;

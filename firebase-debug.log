@@ -1,0 +1,36 @@
+[debug] [2017-10-08T17:34:29.196Z] ----------------------------------------------------------------------
+[debug] [2017-10-08T17:34:29.198Z] Command:       /usr/local/bin/node /usr/local/bin/firebase serve
+[debug] [2017-10-08T17:34:29.199Z] CLI Version:   3.12.0
+[debug] [2017-10-08T17:34:29.199Z] Platform:      darwin
+[debug] [2017-10-08T17:34:29.199Z] Node Version:  v6.10.3
+[debug] [2017-10-08T17:34:29.199Z] Time:          Sun Oct 08 2017 10:34:29 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:29.199Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2017-10-08T17:34:29.216Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2017-10-08T17:34:29.216Z] > authorizing via signed-in user
+[debug] [2017-10-08T17:34:29.218Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
+[debug] [2017-10-08T17:34:29.218Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token { refresh_token: '1/JTi7gpHIaf0JL77lMBsMGrfP2FuOtkGNLZ7TEfVkCEE',
+  client_id: '563584335869-fgrhgmd47bqnekij5i8b5pr03ho849e6.apps.googleusercontent.com',
+  client_secret: 'j9iVZfS8kkCEFUPaAeJV0sAi',
+  grant_type: 'refresh_token',
+  scope: 'email https://www.googleapis.com/auth/cloud-platform https://www.googleapis.com/auth/cloudplatformprojects.readonly https://www.googleapis.com/auth/firebase openid' } 
+ Sun Oct 08 2017 10:34:29 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:29.441Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-08T17:34:29.445Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/fruit-drop-1506557698689  
+ Sun Oct 08 2017 10:34:29 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:30.287Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-08T17:34:30.288Z] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/fruit-drop-1506557698689/tokens  
+ Sun Oct 08 2017 10:34:30 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:30.835Z] <<< HTTP RESPONSE 200
+[info] 
+[info] === Serving from '/Users/gracepark/Documents/UCLA_CodingBootcamp/fruitdrop/fruitdrop'...
+[info] 
+[debug] [2017-10-08T17:34:30.838Z] >>> HTTP REQUEST GET https://cloudresourcemanager.googleapis.com/v1/projects/fruit-drop-1506557698689  
+ Sun Oct 08 2017 10:34:30 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:31.345Z] <<< HTTP RESPONSE 200
+[debug] [2017-10-08T17:34:31.345Z] >>> HTTP REQUEST GET https://mobilesdk-pa.googleapis.com/v1/projects/425209410204/clients/_:getWebAppConfig  
+ Sun Oct 08 2017 10:34:31 GMT-0700 (PDT)
+[debug] [2017-10-08T17:34:31.806Z] <<< HTTP RESPONSE 200
+[info] i  hosting: Serving hosting files from: public
+[info] ✔  hosting: Local server: http://localhost:5000
+

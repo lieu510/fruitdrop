@@ -1,32 +1,17 @@
-/***
-**** MAIN PAGE CSS
-****/
-
-.content {
-	background: url("../images/main_page.jpg") no-repeat center center fixed;
-	-webkit-background-size: cover;
-	-moz-background-size: cover;
-	-o-background-size: cover;
-	background-size: cover;
-	min-height: 100%;
+/*Universal*/
+:root:before {
+  content: url(../images/lauren-mancke-63448.jpg)
+           url(../images/brooke-lark-230140.jpg)
+           url(../images/annie-spratt-124160.jpg);
+  /* partial fallback */
+  background-image: url(../images/brooke-lark-230140.jpg);
+  visibility: hidden;
+  position: absolute;
+  left: -999em;
 }
 
-#button2, #logout {
-    border: none;
-}
-
-.navbar-brand {
-	font-size: 30px!important;
-	margin-left: 1rem;
-}
-
-.footer {
-    width: 100%;	
-    text-align: center;
-    background-color: #666666;
-	color: #ffffff;
-	font-size: 11px;
-	position: static;
+body, p {
+	font-family: 'Open Sans', sans-serif;
 }
 
 .profile {
@@ -37,8 +22,23 @@
 	max-width: 260px;
 }
 
-.btn {
-	margin: 5px;
+.btn-primary {
+	background-color: transparent;
+	border: 1px solid #f55859;
+	font-size: 1.5em;
+	color: #000000;
+}
+
+.btn-primary:hover {
+	background-color: #f55859;
+	color: #fff;
+	border: 1px solid #f55859;
+}
+
+button {
+	background-color: #f55859;
+	color: #ffffff;
+	border-radius: .25rem;
 }
 
 #search {
@@ -49,16 +49,235 @@
 	width: 40%;
 	height: 40px;
 }
+
+a.nav-link {
+	font-size: 1.5em;
+	letter-spacing: 0.25em;
+}
+
+footer.footer {
+	color: #000;
+	text-align: center;
+	width: 100%;
+	font-size: 1.5em;
+	margin-bottom: 1em;
+	background-color: transparent;
+}
+
+/*Header for all pages except Index*/
+.navbar-brand {
+	margin-left: 1em;
+	margin-bottom: 1em;
+	text-transform: uppercase;
+	font-size: 9em;
+	letter-spacing: 0px;
+	text-align: center;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.navbar-brand span.alt {
+	margin-right: 0.2em;
+	color: #f55859;
+	font-family: "Sacramento", cursive;
+	font-size: 1.5em;
+	text-transform: none;
+	position: relative;
+}
+
+.btn-outline-success {
+	color: #f55859;
+    background-color: transparent;
+    background-image: none;
+    border-color: #f55859;
+}
+
+.btn-outline-success:hover {
+	background-color: #f55859;
+	border-color: #f55859;
+}
+
+input.form-control:focus {
+	border-color: #f55859;
+}
+.navbar li.nav-item:last-child {
+	margin-left: 2em;
+}
+.navbar li.nav-item:last-child a:hover {
+	color: #f55859;
+}
+
+/*Profile Page*/
+
+body.profile {
+	background: url("../images/lauren-mancke-63448.jpg") no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.profile .container-fluid {
+	margin-top: 7em;
+}
+
+button.edit-listing, button.delete-listing {
+	background-color: transparent;
+	border: none;
+	color: #000000;
+	cursor: pointer;
+}
+
+
+/*Index Page*/
+
+body.home {
+	background: url("../images/brooke-lark-230140.jpg") no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+#button2, #logout {
+    border: none;
+}
+
+.home h1.site-title {
+	margin-top: 0px;
+    margin-bottom: 0px;
+	margin-left: 1rem;
+	text-transform: uppercase;
+	font-size: 7em;
+	letter-spacing: 0px;
+	text-align: center;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+.home h1.site-title span.alt {
+	color: #f55859;
+	font-family: "Sacramento", cursive;
+	font-size: 1.5em;
+	text-transform: none;
+	display: block;
+	position: relative;
+	left: -0.8em;
+	margin-bottom: -0.55em;
+}
+
+.home #profile-link:hover {
+	color: #f55859;
+}
+
+.home .btn {
+	margin-left: 1.5em;
+	height: 3em;
+    margin-bottom: 0.6em;
+    width: 6em;
+	background-color: transparent;
+	border: 1px solid #f55859;
+	font-size: 1.5em;
+	color: #000000;
+}
+
+.home .btn-primary:hover {
+	background-color: #f55859;
+	color: #fff;
+	border: 1px solid #f55859;
+}
+
+.home .search-input {
+	font-family: 'Open Sans', sans-serif;
+	height: 2.2em;
+    margin-left: 1em;
+    border-radius: 0.25rem;
+    border: 1px solid grey;
+    background-color: transparent;
+}
+
+.home .search-input:focus {
+	color: #f55859;
+}
+
+
+.home .search-input[type="text"]{
+	padding-left: 1em;
+    font-weight: 300;
+    font-size: 2em;
+    width: 25%;
+}
+
 /*MAP PAGE*/
 
+body.map {
+	background: url("../images/annie-spratt-124160.jpg") no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.map .navbar-nav .nav-link {
+	padding-right: 2rem;
+    padding-left: .5rem;
+    padding-bottom: 3rem;
+}
+
+.map div.map {
+	margin: 0 auto;
+	position: relative;
+	top: 10em;
+}
 
 #map_wrapper {
     height: 1000px;
 }
 
 #map_canvas {
+	border-color: black;
     width: 100%;
-    height: 50%;
+    height: 80%;
+}
+
+/*FAQ Page*/
+body.faq {
+	background: url("../images/pineapple-supply-co-124390.jpg") no-repeat center center;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	-o-background-size: cover;
+	background-size: cover;
+	min-height: 100%;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.faq .faq-header h2 {
+	position: relative;
+	top: 5em;
+	text-align: center;
+}
+
+.faq .faq-header p.subheading {
+	position: relative;
+	top: 10em;
+	text-align: center;
+}
+
+.faq .faq-body {
+	position: relative;
+	top: 12em;
 }
 
 
+
+h3.mapInfo, h3.mapInfo p {
+	text-align: center;
+}

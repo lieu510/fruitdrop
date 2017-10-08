@@ -3,6 +3,7 @@
 <head>
 	<title>Fruit Drop</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400|PT+Sans+Narrow|Sacramento" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-4.0.0-beta-dist/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
 	<script src="assets/javascript/jquery-3.2.1.min.js"></script>
@@ -10,10 +11,10 @@
 	<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
 </head>
 <body class="map">
-	<header>Map Page</header>
 	<!--NAVIGATION-->
-	<nav class="navbar fixed-top navbar-expand-sm navbar-dark bg-dark">
-		<a class="navbar-brand" href="index.html">Fruit Drop</a>
+	<nav class="navbar fixed-top navbar-expand-sm">
+        <a class="navbar-brand" href="index.html">
+            <span class="alt">Fruit</span>Drop</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
 			<span class="navbar-toggler-icon"></span>
 		</button>
@@ -27,9 +28,9 @@
 	</nav>
 
 	<!--MAIN PAGE CONTENT-->
-	<div class="container">	
+	<div class="container-fluid">	
 		<div class="row align-items-center search">
-			<div class="col-md-10">
+			<div class="col-md-10 map">
 		    	<div id="map_wrapper">
 			    <div id="map_canvas" class="mapping"></div>
 			</div>
@@ -38,7 +39,7 @@
 	</div>
 
 	    <!-- FOOTER -->
-	<footer class="footer fixed-bottom">
+	<footer class="footer">
 		<div class="container">
 			&copy; Fruit Drop Copyright 2017
 		</div>

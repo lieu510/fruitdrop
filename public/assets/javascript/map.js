@@ -15,12 +15,14 @@ var config = {
         var geocoder = new google.maps.Geocoder();
         var map;
         var infoWindowContent = [];
+        //<div>Icons made by Twitter from https://www.flaticon.com/ Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/ Creative Commons BY 3.0
+        var image = "../assets/images/peach.png"
         var myLatlng1 = new google.maps.LatLng(34.0522, -118.2437);
         var bounds = new google.maps.LatLngBounds();
         var mapOptions = {
             zoom: 10,
             center: myLatlng1,
-            mapTypeId: 'roadmap'
+            mapTypeId: 'roadmap',
         };
 
         // Display a map on the page
@@ -65,6 +67,7 @@ var config = {
                     var marker = new google.maps.Marker({
                         map: map,
                         position: {lat: dataMaker[i].lat, lng: dataMaker[i].long},
+                        icon: image
                     });
                     var infowindow = new google.maps.InfoWindow();
                     // create an infowindow2 
@@ -93,10 +96,10 @@ var config = {
                         infowindow.close();  
                     });    
 
-                    var userProfile = "profile.html?uid=" + dataMaker[i].uid;
+                    var userProfile = "https://gracepark.github.io/fruitdrop/public/profile.html?uid=" + dataMaker[i].uid;
 
-                    infowindow2.setContent('<h3 class="mapInfo">'+ dataMaker[i].item + '</h3>' + '<p>Pick up your ' + dataMaker[i].item + ' here!' + userProfile 
-                        + '</p>' );   
+                    infowindow2.setContent('<h3 class="mapInfo">'+ dataMaker[i].item + '</h3>' + '<p>Pick up your ' + dataMaker[i].item + ' soon!</p>' + '<p>View Details: </p>' + '<a href="' + userProfile 
+                        + '">User Profile</a>' );   
 
                     // Open the infowindow
                     google.maps.event.addListener(marker, 'click', function() {

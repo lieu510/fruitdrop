@@ -47,7 +47,7 @@ $(document).ready(function() {
                 currentUser = firebase.auth().currentUser;
                 displaySelfInfo();
             } else {
-                firebase.database().ref("bio").child(uid).once("value").then(function(snapshot) {
+                firebase.database().ref("users").child(uid).once("value").then(function(snapshot) {
                     currentUser = {
                         uid: uid,
                         photoURL: snapshot.val().photoURL,
@@ -58,29 +58,11 @@ $(document).ready(function() {
                 });
                 $("#edit-profile").css("display", "none");
                 $("#add").css("display", "none");
+                $("#button2").html("<a class='nav-link' id='profile-link' href='#'>Profile</a>");
+                $(document).on("click", "#profile-link", function() {
+                    window.location = "profile.html?uid=" + user.uid;
+                });
             }
-
-            $("#profile-pic").attr("src", currentUser.photoURL);
-            $("#profile-name").text(currentUser.displayName);
-            firebase.database().ref("bio").child(currentUser.uid).on("child_added", function(childSnapshot) {
-                $("#bio").text(childSnapshot.val().bio);
-                $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
-            });
-            // Display user's listings in profile and to Firebase
-            firebase.database().ref("listings").child(currentUser.uid).on("child_added", function(childSnapshot) {
-                //add to firebase
-                var newItem = childSnapshot.child('item').val();
-                console.log("newitem: ", newItem);
-                if (newItem) {
-                    firebase.database().ref("items").child(newItem).push(childSnapshot.key);
-
-                }
-                //add to profile
-                $("#listings").append("<tr><td>" + childSnapshot.val().item +
-                    "</td><td>" + childSnapshot.val().quantity +
-                    "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
-                    "</td><td>" + childSnapshot.val().date + "</td></tr>");
-            });
         }
     });
   
@@ -200,11 +182,6 @@ $(document).ready(function() {
         //add new listing to items list on firebase
         firebase.database().ref("items").child(item).push(newListing.key);
         
-        $("#item").val("");
-        $("#quantity").val("");
-        $("#street").val("");
-        $("#zip-code").val("");
-        $("#date").val("");
         $('#addListing').modal('hide');
 
         displayListings();
@@ -247,6 +224,15 @@ $(document).ready(function() {
         $('#addListing').modal('hide');
         
         displayListings();
+    });
+
+    // clear form 
+    $('#addListing').on('hidden.bs.modal', function () {
+        $("#item").val("");
+        $("#quantity").val("");
+        $("#street").val("");
+        $("#zip-code").val("");
+        $("#date").val("");
     });
 
     // delete listing

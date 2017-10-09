@@ -56,10 +56,15 @@
       $("#login").on("click", function() {
         login();
       });
+      
+      //link to map.html page with search parameters
+      $("#search-button").on("click", function() {
+        event.preventDefault();
+        var searchItem = $("#search-item").val();
+        var searchZipCode = $("#search-zip").val();
 
-
-
-
+        window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
+      });
     });
 
 

@@ -16,7 +16,7 @@ body, p {
 }
 
 .container-fluid {
-	height: 95%;
+	min-height: 95%;
 }
 
 .card {

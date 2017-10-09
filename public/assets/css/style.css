@@ -2,7 +2,8 @@
 :root:before {
   content: url(../images/lauren-mancke-63448.jpg)
            url(../images/brooke-lark-230140.jpg)
-           url(../images/annie-spratt-124160.jpg);
+           url(../images/annie-spratt-124160.jpg)
+           url(../images/pineapple-supply-co-124390.jpg)
   /* partial fallback */
   background-image: url(../images/brooke-lark-230140.jpg);
   visibility: hidden;
@@ -62,6 +63,8 @@ footer.footer {
 }
 
 /*Header for all pages except Index*/
+
+
 .navbar-brand {
 	margin-left: 1em;
 	margin-bottom: 1em;
@@ -324,19 +327,18 @@ p.subheading {
 
 .faq .faq-header h2 {
 	position: relative;
-	top: 3.5em;
+	top: -0.5em;
 	text-align: center;
 }
 
 .faq .faq-header p.subheading {
 	position: relative;
-	top: 7em;
 	text-align: center;
 }
 
 .faq .faq-body {
 	position: static;
-	margin-top: 12em;
+	margin-top: 3em;
 }
 
 .faq h2 {
@@ -351,6 +353,7 @@ p.subheading {
 .faq .faq-body li {
 	font-size: 2em;
 }
+
 .faq .faq-body p {
 	font-size: 1.5em;
 }

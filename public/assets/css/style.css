@@ -214,7 +214,6 @@ body.home {
 	color: #f55859;
 }
 
-
 .home .search-input[type="text"]{
 	padding-left: 1em;
 	margin: 10px 0px 10px 0px;
@@ -226,6 +225,18 @@ body.home {
 
 .home .search-row {
 	margin-top: 10vh;
+}
+
+.home div#description {
+	font-family: 'Sacramento', cursive;
+	font-size: 6vw;
+	font-weight: bold;
+	text-align: center;
+	position: fixed;
+	bottom: 25%;
+	-ms-transform: rotate(-10deg); /* IE 9 */
+    -webkit-transform: rotate(-10deg); /* Safari */
+    transform: rotate(-10deg); /* Standard syntax */
 }
 
 /*MAP PAGE*/

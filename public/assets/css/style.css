@@ -188,12 +188,12 @@ body.home {
 }
 .home .btn {
 	margin-left: 1.5em;
-	height: 2.7em;
-    margin-bottom: 0.6em;
+	height: 2.5em;
+    margin: 10px 0px 10px 0px;
     width: 6em;
 	background-color: transparent;
 	border: 1px solid #f55859;
-	font-size: 1.5em;
+	font-size: 1.5vw;
 	color: #000000;
 }
 
@@ -201,6 +201,10 @@ body.home {
 	background-color: #f55859;
 	color: #fff;
 	border: 1px solid #f55859;
+}
+
+.home #search.col-md-3 {
+	max-width: 10%;
 }
 
 .home .search-input {
@@ -220,13 +224,14 @@ body.home {
 	padding-left: 1em;
 	margin: 10px 0px 10px 0px;
     font-weight: 300;
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     width: 100%;
-    height: 50px;
+    height: 2.5em;
 }
 
 .home .search-row {
 	margin-top: 20vh;
+	align-items: center;
 }
 
 .home div#description {

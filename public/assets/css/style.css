@@ -143,6 +143,10 @@ button.edit-listing, button.delete-listing {
 	right: -1em;
 }
 
+.card-title {
+	letter-spacing: 0.1em;
+}
+
 .card-img-top {
 	border-radius-top: 0.25em;
 }
@@ -154,6 +158,18 @@ button.edit-listing, button.delete-listing {
 	font-weight: bold;
 }
 
+#listings {
+	text-transform: uppercase;
+}
+
+thead {
+	background-color: #f7cacb;
+	font-weight: 700;
+}
+
+.table {
+	margin-top: 2rem;
+}
 /*Index Page*/
 
 body.home {

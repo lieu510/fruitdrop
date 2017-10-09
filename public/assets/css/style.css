@@ -170,6 +170,10 @@ thead {
 .table {
 	margin-top: 2rem;
 }
+
+#table-headers th:nth-child(5), #table-headers th:nth-child(6) {
+	color: transparent;
+}
 /*Index Page*/
 
 body.home {

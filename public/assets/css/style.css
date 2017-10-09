@@ -331,7 +331,7 @@ p.subheading {
 
 .faq .faq-header h2 {
 	position: relative;
-	top: -0.5em;
+	top: -1em;
 	text-align: center;
 	font-size: 3.5vw;
 }
@@ -339,11 +339,12 @@ p.subheading {
 .faq .faq-header p.subheading {
 	position: relative;
 	text-align: center;
+	top: -2em;
 }
 
 .faq .faq-body {
 	position: static;
-	margin-top: 1em;
+	margin-top: -1em;
 }
 
 .faq h2 {

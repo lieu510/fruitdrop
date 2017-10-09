@@ -29,7 +29,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav float-right">
                 <li class="nav-item" id="button3">
                     <a class="nav-link" href="faq.html">FAQ</a>
                 </li>
@@ -41,12 +41,16 @@
     </nav>
     <!--MAIN PAGE CONTENT-->
     <div class="container-fluid content">
-        <div class="row justify-content-center">
-            <div class="col-md-10" id="search">
-                <input class="search-input" type="text" name="search-produce" placeholder="Search Produce">
-                <input class="search-input" type="text" name="search-zip-code" placeholder="Zip Code">
-                <button class="btn btn-primary" id="search-button">Search</button>
-            </div>
+        <div class="row justify-content-center search-row">
+			<div class="col-md-4 col-sm-7 col-10" id="search">
+				<input class="search-input" type="text" name="search-produce" id="search-item" placeholder="Search Produce">
+			</div>
+			<div class="col-md-4 col-sm-7 col-10" id="search">
+				<input class="search-input" type="text" name="search-zip-code" id="search-zip" placeholder="Zip Code">
+			</div>
+			<div class="col-md-3 text-center" id="search">
+				<button class="btn btn-primary" id="search-button">Search</button>
+			</div>
         </div>
     </div>
     <!--FOOTER-->

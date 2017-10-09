@@ -334,6 +334,7 @@ p.subheading {
 	top: -1em;
 	text-align: center;
 	font-size: 3.5vw;
+	letter-spacing: 0.1em;
 }
 
 .faq .faq-header p.subheading {

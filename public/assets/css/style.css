@@ -260,10 +260,6 @@ body.map {
     padding-bottom: 3rem;
 }
 
-.map div.search-row {
-    margin-top: 100px;
-}
-
 .map .search-input[type="text"]{
 	padding-left: 1em;
 	margin: 10px 0px 10px 0px;

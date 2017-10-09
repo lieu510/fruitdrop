@@ -269,7 +269,7 @@ body.map {
 	padding-left: 1em;
 	margin: 10px 0px 10px 0px;
     font-weight: 300;
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     width: 100%;
     height: 50px;
     border-radius: 0.25rem;
@@ -278,6 +278,11 @@ body.map {
 
 .map #search-button {
 	margin: 10px 0px 10px 0px;
+	width: 6em;
+}
+
+.map #search.col-md-3 {
+	max-width: 10%;
 }
 
 .map div.map {

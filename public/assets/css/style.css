@@ -139,8 +139,13 @@ button.edit-listing, button.delete-listing {
 	max-width: 260px;
 	border: none;
 	text-align: center;
+	border-radius: 0.25em;
+	right: -1em;
 }
 
+.card-img-top {
+	border-radius-top: 0.25em;
+}
 .profile #edit-profile {
 	color: #f55859;
 }

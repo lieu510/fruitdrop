@@ -128,10 +128,6 @@ body.profile {
     padding-bottom: 20px;
 }
 
-.profile .container-fluid {
-	margin-top: 7em;
-}
-
 .profile div.collapse.navbar-collapse.justify-content-end {
 	margin-bottom: 3.5em;
 }

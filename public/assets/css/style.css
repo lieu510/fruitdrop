@@ -16,11 +16,7 @@ body, p {
 }
 
 .container-fluid {
-	height: 95%;
-}
-
-.card {
-	max-width: 260px;
+	min-height: 95%;
 }
 
 .btn-primary {
@@ -139,7 +135,45 @@ button.edit-listing, button.delete-listing {
 	cursor: pointer;
 }
 
+.card {
+	max-width: 260px;
+	border: none;
+	text-align: center;
+	border-radius: 0.25em;
+	right: -1em;
+}
 
+.card-title {
+	letter-spacing: 0.1em;
+}
+
+.card-img-top {
+	border-radius-top: 0.25em;
+}
+.profile #edit-profile {
+	color: #f55859;
+}
+
+.profile #edit-profile:hover {
+	font-weight: bold;
+}
+
+#listings {
+	text-transform: uppercase;
+}
+
+thead {
+	background-color: #f7cacb;
+	font-weight: 700;
+}
+
+.table {
+	margin-top: 2rem;
+}
+
+#table-headers th:nth-child(5), #table-headers th:nth-child(6) {
+	color: transparent;
+}
 /*Index Page*/
 
 body.home {
@@ -269,7 +303,7 @@ body.map {
 	padding-left: 1em;
 	margin: 10px 0px 10px 0px;
     font-weight: 300;
-    font-size: 2.5vw;
+    font-size: 1.5vw;
     width: 100%;
     height: 50px;
     border-radius: 0.25rem;
@@ -278,6 +312,11 @@ body.map {
 
 .map #search-button {
 	margin: 10px 0px 10px 0px;
+	width: 6em;
+}
+
+.map #search.col-md-3 {
+	max-width: 10%;
 }
 
 .map div.map {
@@ -331,35 +370,39 @@ p.subheading {
 
 .faq .faq-header h2 {
 	position: relative;
-	top: -0.5em;
+	top: -1em;
 	text-align: center;
+	font-size: 3.5vw;
+	letter-spacing: 0.1em;
 }
 
 .faq .faq-header p.subheading {
 	position: relative;
 	text-align: center;
+	top: -2em;
+	color: #f55859;
 }
 
 .faq .faq-body {
 	position: static;
-	margin-top: 3em;
+	margin-top: -1em;
 }
 
 .faq h2 {
-	font-size: 3em;
+	font-size: 3vw;
 }
 
 .faq h3 {
-	font-size: 2.5em;
+	font-size: 2.5vw;
 	margin-bottom: 1em;
 }
 
 .faq .faq-body li {
-	font-size: 2em;
+	font-size: 2vw;
 }
 
 .faq .faq-body p {
-	font-size: 1.5em;
+	font-size: 1.5vw;
 }
 
 .faq .navbar {

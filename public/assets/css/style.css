@@ -343,6 +343,14 @@ h3.mapInfo {
 	color: #f55859;
     text-decoration: underline;
 }
+.map #listings-table {
+	display: none;
+	
+}
+
+.map .table {
+	background-color:rgba(255, 255, 255, 0.75);
+}
 
 /*FAQ Page*/
 body.faq {

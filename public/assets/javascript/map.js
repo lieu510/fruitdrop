@@ -12,41 +12,6 @@ var config = {
  MAP PAGE JS
  **********/
 
-function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
-
-var searchItemStart = getUrlParameter('searchItem');
-var searchItemEnd = searchItemStart + "\uf8ff";
-var searchZip = getUrlParameter('searchZip');
-
-if (searchItemStart) {
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd);
-    recentPostsRef.once('value')
-        .then(function(dataSnapshot) {
-            // handle read data.
-            var searchResults = dataSnapshot.val();
-            console.log(searchResults);
-
-            // firebase.database().ref("listings").once('value')
-            //     .then(function(dataSnapshot) {
-            //     });
-        });
-}
-
-
-
 function initMap() {
     var activeInfoWindow;
     var geocoder = new google.maps.Geocoder();
@@ -164,3 +129,70 @@ function initMap() {
         google.maps.event.removeListener(boundsListener);
     });
 }
+
+
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+// Display user's listings in profile
+function displayListingsSearch(listings) {
+    //clear search table
+    $("#listings").empty();
+    $("#listings-table").show();
+    console.log(listings);
+    for (var listing in listings) {
+        console.log(listings[listing].item);
+        // add to profile
+        $("#listings").append("<tr><td>" + listings[listing].item +
+            "</td><td>" + listings[listing].quantity +
+            "</td><td>" + listings[listing].street + " " + listings[listing].zipCode +
+            "</td><td>" + listings[listing].date +
+            "</td><td><button class='view-profile' data-id='" + listings[listing].uid + "'>View</button>" +
+            "</td></tr>"
+        );
+    }
+}
+
+var searchItemStart = getUrlParameter('searchItem');
+var searchItemEnd = searchItemStart + "\uf8ff";
+var searchZip = getUrlParameter('searchZip');
+
+if (searchItemStart) {
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd);
+    recentPostsRef.once('value')
+        .then(function(dataSnapshot) {
+            //display search results table
+            displayListingsSearch(dataSnapshot.val());
+        });
+}
+
+//link to map.html page with search parameters
+$("#search-button").on("click", function() {
+    event.preventDefault();
+    var searchItem = $("#search-item").val();
+    var searchZipCode = $("#search-zip").val();
+
+    window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
+});
+
+
+//link to profile for the listing's owner
+$(document).on("click", ".view-profile", function() {
+    event.preventDefault();
+    //obtain profile id of user from listing
+    var userID = $(this).attr("data-id");
+    //navigate to selected listing's user page
+    window.location = "profile.html?uid=" + userID;
+});

@@ -27,9 +27,25 @@ function getUrlParameter(sParam) {
     }
 };
 
-var searchItem = getUrlParameter('searchItem');
+var searchItemStart = getUrlParameter('searchItem');
+var searchItemEnd = searchItemStart + "\uf8ff";
 var searchZip = getUrlParameter('searchZip');
-var searchResults = null;
+
+if (searchItemStart) {
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd);
+    recentPostsRef.once('value')
+        .then(function(dataSnapshot) {
+            // handle read data.
+            var searchResults = dataSnapshot.val();
+            console.log(searchResults);
+
+            // firebase.database().ref("listings").once('value')
+            //     .then(function(dataSnapshot) {
+            //     });
+        });
+}
+
+
 
 function initMap() {
     var activeInfoWindow;

@@ -101,11 +101,14 @@ $(document).ready(function() {
                 snapshot.forEach(function(childSnapshot) {
                     // check children apply to current user
                     if (childSnapshot.child('uid').val() === currentUser.uid) {
+                        var startTime = moment(childSnapshot.val().date, "MM/DD/YY").format("YYYYMMDD");
+                        var location = childSnapshot.val().street + " " + childSnapshot.val().zipCode;
+                        var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + childSnapshot.val().item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + childSnapshot.val().date + "</a>";
                         //add to profile
                         $("#listings").append("<tr><td>" + childSnapshot.val().item +
                             "</td><td>" + childSnapshot.val().quantity +
-                            "</td><td>" + childSnapshot.val().street + " " + childSnapshot.val().zipCode +
-                            "</td><td>" + childSnapshot.val().date + "</td></tr>"
+                            "</td><td>" + location +
+                            "</td><td>" + calendarLink + "</td></tr>"
                         );
                     }
                 });

@@ -1,4 +1,3 @@
-$(document).ready(function() {
     $.ajaxSetup({ cache: true });
     $.getScript('//connect.facebook.net/en_US/sdk.js', function(){
         FB.init({
@@ -8,6 +7,8 @@ $(document).ready(function() {
         $('#loginbutton,#feedbutton').removeAttr('disabled');
         FB.getLoginStatus(updateStatusCallback);
     });
+
+$(document).ready(function() {
 
     function getUrlParameter(sParam) {
         var sPageURL = decodeURIComponent(window.location.search.substring(1)),

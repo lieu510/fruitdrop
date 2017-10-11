@@ -164,11 +164,14 @@ function displayListingsSearch(listings) {
             pageNum++;
 
         }
-        // add to profile
+        var startTime = moment(listings[listing].date, "MM/DD/YY").format("YYYYMMDD");
+        var location = listings[listing].street + " " + listings[listing].zipCode;
+        var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + listings[listing].item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + listings[listing].date + "</a>";
+        // add to table
         $("#listings").append("<tr class='page-num-" + pageNum + "'><td>" + listings[listing].item +
             "</td><td>" + listings[listing].quantity +
-            "</td><td>" + listings[listing].street + " " + listings[listing].zipCode +
-            "</td><td>" + listings[listing].date +
+            "</td><td>" + location +
+            "</td><td>" + calendarLink +
             "</td><td><button class='view-profile' data-id='" + listings[listing].uid + "'>View</button>" +
             "</td></tr>"
         );

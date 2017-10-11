@@ -51,7 +51,7 @@ $(document).ready(function() {
         $("#profile-pic").attr("src", currentUser.photoURL);
         $("#profile-name").text(currentUser.displayName);
         $("#email").html(currentUser.email);
-        firebase.database().ref("users").child(currentUser.uid).on("child_added", function(childSnapshot) {
+        firebase.database().ref("users").child(currentUser.uid).on("value", function(childSnapshot) {
             $("#bio").text(childSnapshot.val().bio);
             $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
         });
@@ -91,7 +91,7 @@ $(document).ready(function() {
             $("#profile-pic").attr("src", currentUser.photoURL);
             $("#profile-name").text(currentUser.displayName);
             $("#email").html("<a href='mailto:" + currentUser.email + "'>" + currentUser.email + "</a>");
-            firebase.database().ref("users").child(currentUser.uid).on("child_added", function(childSnapshot) {
+            firebase.database().ref("users").child(currentUser.uid).on("value", function(childSnapshot) {
                 $("#bio").text(childSnapshot.val().bio);
                 $("#personal-link").html(childSnapshot.val().personal).attr("href", "http://" + childSnapshot.val().personal);
             });
@@ -247,7 +247,7 @@ $(document).ready(function() {
         var bio = $("#user-bio").val().trim();
         var personalSite = $("#personal").val().trim();
 
-        firebase.database().ref("bio").child(currentUser.uid).update({
+        firebase.database().ref("users").child(currentUser.uid).update({
             bio: bio,
             personal: personalSite
         })

@@ -162,6 +162,21 @@ button.edit-listing, button.delete-listing {
 	text-transform: uppercase;
 }
 
+#fb-share {
+	margin: 10px 0px 10px 0px;
+	width: 6em;
+}
+
+#fb-share:hover {
+	cursor: pointer;
+}
+
+#fb-pic {
+
+ width: 75px;
+padding-right: 5px;
+}
+
 thead {
 	background-color: #f7cacb;
 	font-weight: 700;

@@ -230,6 +230,15 @@ $("#search-button").on("click", function() {
     window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
 });
 
+//link to profile for the listing's owner
+$(document).on("click", ".view-profile", function() {
+    event.preventDefault();
+    //obtain profile id of user from listing
+    var userID = $(this).attr("data-id");
+    //navigate to selected listing's user page
+    window.location = "profile.html?uid=" + userID;
+});
+
 //navigate pagination
 $(document).on("click", ".page-item", function() {
     console.log(paginationMax);

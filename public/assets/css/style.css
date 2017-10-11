@@ -367,6 +367,15 @@ h3.mapInfo {
 	background-color:rgba(255, 255, 255, 0.75);
 }
 
+.map .page-link {
+	color: #f55859;
+}
+
+.activated .page-link{
+	color: #ffffff;
+	background-color: #f55859;
+}
+
 /*FAQ Page*/
 body.faq {
 	background: url("../images/pineapple-supply-co-124390.jpg") no-repeat fixed center;

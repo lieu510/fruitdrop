@@ -122,14 +122,12 @@ function initMap() {
             return geocodeCallBack;
         }
     }
-
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         this.setZoom(14);
         google.maps.event.removeListener(boundsListener);
     });
 }
-
 
 function getUrlParameter(sParam) {
     var sPageURL = decodeURIComponent(window.location.search.substring(1)),
@@ -146,16 +144,28 @@ function getUrlParameter(sParam) {
     }
 };
 
+var paginationMax = 0;
+
 // Display user's listings in profile
 function displayListingsSearch(listings) {
     //clear search table
     $("#listings").empty();
     $("#listings-table").show();
     console.log(listings);
+    var pageNum = 1;
+    var listingCount = 0;
+    var pageClass = "";
     for (var listing in listings) {
         console.log(listings[listing].item);
+        listingCount++;
+        //group pages into groups of 10 listings
+        if (listingCount % 10 === 0) {
+            //increment page count
+            pageNum++;
+
+        }
         // add to profile
-        $("#listings").append("<tr><td>" + listings[listing].item +
+        $("#listings").append("<tr class='page-num-" + pageNum + "'><td>" + listings[listing].item +
             "</td><td>" + listings[listing].quantity +
             "</td><td>" + listings[listing].street + " " + listings[listing].zipCode +
             "</td><td>" + listings[listing].date +
@@ -163,7 +173,40 @@ function displayListingsSearch(listings) {
             "</td></tr>"
         );
     }
-}
+    // Pagination - Previous page
+    $("#search-pagination").append("<li class='page-item disabled' id='pagination-previous'><div class='page-link' tabindex='-1'>Previous</div></li>");
+
+    //Pagination - navigation items
+    for (var page = 1; page <= pageNum; page++) {
+        //hide all pages after the page 1
+        if (pageNum !== 1) {
+            pageClass = ".page-num-" + pageNum;
+            $(pageClass).hide();
+        }
+
+        if (page === 1) {
+            $("#search-pagination").append("<li class='page-item activated'><div class='page-link'>" +
+                +page + "</div></li>"
+            );
+        } else {
+            $("#search-pagination").append("<li class='page-item' ><div class='page-link'>" +
+                +page + "</div></li>"
+            );
+        }
+
+
+    }
+
+    // Pagination - Next page
+    $("#search-pagination").append("<li class='page-item' id='pagination-next'><div class='page-link'>Next</div></li>");
+
+    //save max number of pages for results
+    paginationMax = pageNum;
+};
+
+
+
+
 
 var searchItemStart = getUrlParameter('searchItem');
 var searchItemEnd = searchItemStart + "\uf8ff";
@@ -187,12 +230,61 @@ $("#search-button").on("click", function() {
     window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
 });
 
+//navigate pagination
+$(document).on("click", ".page-item", function() {
+    console.log(paginationMax);
+    //don't do anything is nav is disabled
+    if (!$(this).hasClass("disabled")) {
 
-//link to profile for the listing's owner
-$(document).on("click", ".view-profile", function() {
-    event.preventDefault();
-    //obtain profile id of user from listing
-    var userID = $(this).attr("data-id");
-    //navigate to selected listing's user page
-    window.location = "profile.html?uid=" + userID;
+        //remove disable class
+        $(".disabled").removeClass("disabled");
+
+        var currentPage = $(".activated").children().text();
+        var selection = $(this).children().text();
+        var pageItemArr = [];
+
+        //add page item to array to help set active
+        $(".page-item").each(function() {
+            pageItemArr.push($(this));
+
+        });
+
+        console.log(pageItemArr);
+
+        //remove the active class from the current nav item
+        $(".activated").removeClass("activated");
+
+        if (selection === "Previous") {
+            selection = parseInt(currentPage, 10) - 1;
+        }
+
+        if (selection === "Next") {
+            selection = parseInt(currentPage, 10) + 1;
+        }
+
+        if (selection !== "Previous" && selection !== "Next") {
+            selection = parseInt(selection, 10);
+
+            if (selection === 1) {
+                $("#pagination-previous").addClass("disabled");
+            }
+            if (selection === paginationMax) {
+                $("#pagination-next").addClass("disabled");
+            }
+
+            //set active nav page
+            pageItemArr[selection].addClass("activated");
+
+            var currentPageClass = ".page-num-" + currentPage;
+            var selectedPageClass = ".page-num-" + selection;
+            //hide data from previous page
+            $(currentPageClass).hide();
+
+            //show data from selected page
+            $(selectedPageClass).show();
+        }
+
+
+    }
+
 });

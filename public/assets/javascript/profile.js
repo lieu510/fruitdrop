@@ -281,4 +281,42 @@
             }, function(response) {});
         });
 
+<<<<<<< HEAD
     });
+=======
+    // Display form to edit profile
+    $("#edit-profile").on("click", function() {
+        $("#profile-new").modal("show");
+    });
+    // Submit form to update profile
+    $(document).on("click", "#submit-profile", function(event) {
+        event.preventDefault();
+
+        var bio = $("#user-bio").val().trim();
+        var personalSite = $("#personal").val().trim();
+
+        firebase.database().ref("users").child(currentUser.uid).update({
+            bio: bio,
+            personal: personalSite
+        })
+        $("#profile-new").modal("hide");
+    });
+     // Facebook Share button
+    $(document).on("click", "#fb-share", function() {
+     FB.ui({
+         method: 'share',
+         href: 'https://gracepark.github.io/fruitdrop/public/profile.html?uid=' + currentUser.uid,
+     }, function(response) {});
+ });
+
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=303697393443959";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+   
+});
+>>>>>>> e36e9213ab1c658d42d90ff477146c816bc303b8

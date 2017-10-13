@@ -217,6 +217,7 @@ var searchItemStart = getUrlParameter('searchItem');
 var searchItemEnd = "";
 var searchZip = getUrlParameter('searchZip');
 
+//Search Item ONLY
 if (searchItemStart && searchZip === "") {
 
     //make search string lower case
@@ -239,13 +240,35 @@ if (searchItemStart && searchZip === "") {
         });
 }
 
-
+//Search Zip Code ONLY
 if (searchZip && searchItemStart === "") {
     var recentPostsRef = firebase.database().ref('listings').orderByChild('zipCode').startAt(searchZip).endAt(searchZip+'\uf8ff');
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
             console.log(dataSnapshot.val());
             //display search results table
+            displayListingsSearch(dataSnapshot.val());
+        });
+}
+
+//Search Item AND Zip Code
+if (searchItemStart && searchZip) {
+
+    //make search string lower case
+    searchItemStart = searchItemStart.toLowerCase();
+
+    //make singular
+    if (searchItemStart.endsWith("s")) {
+        searchItemStart = searchItemStart.substring(0,searchItemStart.length-1);
+        
+    }
+    var searchCombined = searchItemStart + "_" + searchZip;
+    console.log(searchCombined);
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('itemZip').equalTo(searchCombined).limitToFirst(50);
+    recentPostsRef.once('value')
+        .then(function(dataSnapshot) {
+            //display search results table
+            console.log(dataSnapshot.val());
             displayListingsSearch(dataSnapshot.val());
         });
 }

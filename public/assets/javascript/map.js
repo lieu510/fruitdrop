@@ -151,12 +151,12 @@ function displayListingsSearch(listings) {
     //clear search table
     $("#listings").empty();
     $("#listings-table").show();
-    console.log(listings);
+
     var pageNum = 1;
     var listingCount = 0;
     var pageClass = "";
     for (var listing in listings) {
-        console.log(listings[listing].item);
+        //increase listing counter
         listingCount++;
         //group pages into groups of 10 listings
         if (listingCount % 10 === 0) {
@@ -209,20 +209,39 @@ function displayListingsSearch(listings) {
 
 
 
-
+/*
+SEARCH
+*/
 
 var searchItemStart = getUrlParameter('searchItem');
-var searchItemEnd = searchItemStart + "\uf8ff";
+var searchItemEnd = "";
 var searchZip = getUrlParameter('searchZip');
 
 if (searchItemStart) {
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd);
+
+    //make search string lower case
+    searchItemStart = searchItemStart.toLowerCase();
+
+    //make singular
+    if (searchItemStart.endsWith("s")) {
+        searchItemStart = searchItemStart.substring(0,searchItemStart.length-1);
+        
+    }
+
+    //add search ending string
+    searchItemEnd = searchItemStart + "\uf8ff";
+
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
             //display search results table
             displayListingsSearch(dataSnapshot.val());
         });
 }
+
+/*
+EVENT LISTENERS
+*/
 
 //link to map.html page with search parameters
 $("#search-button").on("click", function() {
@@ -260,8 +279,6 @@ $(document).on("click", ".page-item", function() {
             pageItemArr.push($(this));
 
         });
-
-        console.log(pageItemArr);
 
         //remove the active class from the current nav item
         $(".activated").removeClass("activated");

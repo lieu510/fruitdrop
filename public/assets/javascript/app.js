@@ -85,7 +85,6 @@
       var uniqueUser = firebase.database().ref("users").child(user.uid);
       uniqueUser.once("value")
         .then(function(snapshot) {
-          console.log(snapshot.exists());
           if (!snapshot.exists()) {
             uniqueUser.set(userObj);
           }

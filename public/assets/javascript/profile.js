@@ -148,6 +148,8 @@ $(document).ready(function() {
         var street = $("#street").val();
         var zipCode = $("#zip-code").val();
         var date = $("#date").val();
+
+        item = item.toLowerCase();
         // Input to firebase
         var newListing = firebase.database().ref("listings").push({
             item: item,

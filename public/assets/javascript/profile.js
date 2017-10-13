@@ -226,6 +226,19 @@
             var street = $("#street").val();
             var zipCode = $("#zip-code").val();
             var date = $("#date").val();
+            item = item.toLowerCase();
+            
+            var itemZip = "";
+            
+            //remove "s" from item name
+            if (item.endsWith("s")) {
+                itemZip = item.substring(0, item.length - 1);
+
+            } else {
+                itemZip = item;
+            }
+
+            itemZip += "_" + zipCode;
             // update listing in firebase
             firebase.database().ref("listings").child(listingId).update({
                 item: item,
@@ -233,6 +246,22 @@
                 street: street,
                 zipCode: zipCode,
                 date: date,
+                itemZip: itemZip
+            });
+            var geocoder = new google.maps.Geocoder();
+            
+            geocoder.geocode({ 'address': street + zipCode }, function(results, status) {
+                if (status !== google.maps.GeocoderStatus.OK) {
+                    console.log("Geocode was not successful for the following reason: " + status);
+                } else {
+                    var latitude = results[0].geometry.location.lat();
+                    var longitude = results[0].geometry.location.lng();
+
+                    firebase.database().ref("listings").child(listingId).update({
+                        lat: latitude,
+                        long: longitude
+                    })
+                }
             });
             $('#addListing').modal('hide');
 

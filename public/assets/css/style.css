@@ -389,7 +389,7 @@ body.faq {
 }
 
 p.subheading {
-	font-size: 1.3em;
+	font-size: 2vw;
 }
 
 .faq .container-fluid.content {
@@ -402,7 +402,7 @@ p.subheading {
 
 .faq .faq-header h2 {
 	position: relative;
-	top: -1em;
+	top: -1.5em;
 	text-align: center;
 	font-size: 3.5vw;
 	letter-spacing: 0.1em;
@@ -411,7 +411,7 @@ p.subheading {
 .faq .faq-header p.subheading {
 	position: relative;
 	text-align: center;
-	top: -2em;
+	top: -2.5em;
 	color: #f55859;
 }
 

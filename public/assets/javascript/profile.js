@@ -280,7 +280,7 @@
             }, function(response) {});
         });
 
-<<<<<<< HEAD
+
     // Display form to edit profile
     $("#edit-profile").on("click", function() {
         $("#profile-new").modal("show");
@@ -316,15 +316,4 @@
 }(document, 'script', 'facebook-jssdk'));
    
 });
-=======
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=303697393443959";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
 
-    });
->>>>>>> 334dff5830f3e32b96b152cebca9fdaed533cbe4

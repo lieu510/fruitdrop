@@ -216,7 +216,11 @@ var searchItemEnd = searchItemStart + "\uf8ff";
 var searchZip = getUrlParameter('searchZip');
 
 if (searchItemStart) {
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd);
+    search(searchItemStart, searchItemEnd);
+}
+
+function search(start, end) {
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(start).endAt(end);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
             //display search results table
@@ -225,12 +229,23 @@ if (searchItemStart) {
 }
 
 //link to map.html page with search parameters
-$("#search-button").on("click", function() {
+$("#map-search-button").on("click", function() {
     event.preventDefault();
     var searchItem = $("#search-item").val();
+    var searchItem2 = searchItem + "\uf8ff";
     var searchZipCode = $("#search-zip").val();
+    search(searchItem, searchItem2);
+    // $.ajax({
+    //     type: 'GET',
+    //     url: 'map.html',
+    //     data: {
+    //         searchItem: searchItem, 
+    //         searchZipCode: searchZipCode
+    //     }
+    // }).done(function(response) {
 
-    window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
+    // });
+    // window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
 });
 
 //link to profile for the listing's owner

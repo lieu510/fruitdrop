@@ -217,7 +217,7 @@ var searchItemStart = getUrlParameter('searchItem');
 var searchItemEnd = "";
 var searchZip = getUrlParameter('searchZip');
 
-if (searchItemStart) {
+if (searchItemStart && searchZip === "") {
 
     //make search string lower case
     searchItemStart = searchItemStart.toLowerCase();
@@ -234,6 +234,17 @@ if (searchItemStart) {
     var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
+            //display search results table
+            displayListingsSearch(dataSnapshot.val());
+        });
+}
+
+
+if (searchZip && searchItemStart === "") {
+    var recentPostsRef = firebase.database().ref('listings').orderByChild('zipCode').startAt(searchZip).endAt(searchZip+'\uf8ff');
+    recentPostsRef.once('value')
+        .then(function(dataSnapshot) {
+            console.log(dataSnapshot.val());
             //display search results table
             displayListingsSearch(dataSnapshot.val());
         });
@@ -263,7 +274,7 @@ $(document).on("click", ".view-profile", function() {
 
 //navigate pagination
 $(document).on("click", ".page-item", function() {
-    console.log(paginationMax);
+
     //don't do anything is nav is disabled
     if (!$(this).hasClass("disabled")) {
 

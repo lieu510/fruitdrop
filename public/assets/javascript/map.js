@@ -20,7 +20,7 @@ function initMap() {
     var map;
     var infoWindowContent = [];
     //<div>Icons made by Twitter from https://www.flaticon.com/ Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/ Creative Commons BY 3.0
-    var image = "../assets/images/peach.png"
+    var image = "/images/peach.png"
     var myLatlng1 = new google.maps.LatLng(34.0522, -118.2437);
     var bounds = new google.maps.LatLngBounds();
     var mapOptions = {

@@ -67,16 +67,20 @@ function initMap() {
 
     function displayMarkers() {
         for (i = 0; i < dataMaker.length; i++) {
-            geocoder.geocode({ 'address': dataMaker[i].street + dataMaker[i].zipCode }, makeCallback(i));
+            (function(i) {
+                setTimeout(function() {
+                geocoder.geocode({ 'address': dataMaker[i].street + dataMaker[i].zipCode }, makeCallback(i));             
+            }, 500 * i);
+            })(i);
         }
 
         function makeCallback(dataMakerIndex) {
-            var geocodeCallBack = function(results, status) {
+
+                var geocodeCallBack = function(results, status) {
 
                 if (status !== google.maps.GeocoderStatus.OK) {
                     console.log("Geocode was not successful for the following reason: " + status);
                 } else {
-
                     var i = dataMakerIndex;
                     var marker = new google.maps.Marker({
                         map: map,
@@ -259,7 +263,6 @@ if (searchZip && searchItemStart === "") {
     var recentPostsRef = firebase.database().ref('listings').orderByChild('zipCode').startAt(searchZip).endAt(searchZip + '\uf8ff');
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
-            console.log(dataSnapshot.val());
             //display search results table
             displayListingsSearch(dataSnapshot.val());
         });

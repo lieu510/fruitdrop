@@ -347,7 +347,7 @@ body.map {
 #map_canvas {
 	border-color: black;
     width: 100%;
-    height: 70%;
+    height: 85%;
 }
 
 h3.mapInfo {

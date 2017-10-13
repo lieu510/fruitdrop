@@ -149,6 +149,8 @@
             var zipCode = $("#zip-code").val();
             var date = $("#date").val();
 
+            item = item.toLowerCase();
+
             var itemZip = "";
             
             //remove "s" from item name

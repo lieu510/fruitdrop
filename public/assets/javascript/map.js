@@ -291,12 +291,10 @@ if (searchItemStart && searchZip) {
 
     }
     var searchCombined = searchItemStart + "_" + searchZip;
-    console.log(searchCombined);
     var recentPostsRef = firebase.database().ref('listings').orderByChild('itemZip').equalTo(searchCombined).limitToFirst(50);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
             //display search results table
-            console.log(dataSnapshot.val());
             displayListingsSearch(dataSnapshot.val());
             displayMarkers(dataSnapshot.val());
         });

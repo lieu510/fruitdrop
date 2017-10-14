@@ -406,7 +406,6 @@ p.subheading {
 	text-align: center;
 	font-size: 3.5vw;
 	letter-spacing: 0.1em;
-	z-index: 9999;
 }
 
 .faq .faq-header p.subheading {

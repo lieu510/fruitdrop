@@ -7,7 +7,7 @@ Fruit Drop is a community for home growers who want to share and trade their fru
 
 ### Live Link
 
-https://gracepark.github.io/fruitdrop
+https://gracepark.github.io/fruitdrop/public/
 
 ### Motivation
 

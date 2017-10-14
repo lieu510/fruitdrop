@@ -19,7 +19,7 @@ All you need is a browser like Chrome and internet access.
 
 ## Authors
 
-Vanessa Montrero (@vmov031), Richard Lieu (@lieu510), Fausto Rendon (@frendon001), and Grace Park (@gracepark)
+Vanessa Montero (@vmov031), Richard Lieu (@lieu510), Fausto Rendon (@frendon001), and Grace Park (@gracepark)
 
 ## License
 

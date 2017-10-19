@@ -244,8 +244,9 @@ body.home {
 }
 
 .home a.nav-link {
-	font-size: 3vw;
+	font-size: 2vw;
 }
+
 .home .btn {
 	margin-left: 1.5em;
 	height: 45px;

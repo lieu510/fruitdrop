@@ -128,6 +128,11 @@ body.profile {
 	margin-bottom: 3.5em;
 }
 
+#error1, #error2, #error3, #error4, #error5 {
+	color: red;
+	font-size: 75%;
+}
+
 button.edit-listing, button.delete-listing {
 	background-color: transparent;
 	border: none;

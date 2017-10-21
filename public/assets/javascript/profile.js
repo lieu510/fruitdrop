@@ -58,6 +58,11 @@
             });
             // create column to edit and delete listing
             $("#table-headers").append("<th>Edit</th><th>Delete</th>");
+            $("#date").datepicker({
+                showOtherMonths: true,
+                selectOtherMonths: true,
+                dateFormat: 'mm/dd/y'
+              });
             displayListings();
         }
         // Display user's listings in profile
@@ -148,56 +153,104 @@
             var street = $("#street").val();
             var zipCode = $("#zip-code").val();
             var date = $("#date").val();
+            var valid1 = false;
+            var valid2 = false;
+            var valid3 = false;
+            var valid4 = false;
+            var valid5 = false;
 
-            item = item.toLowerCase();
-
-            var itemZip = "";
-            
-            //remove "s" from item name
-            if (item.endsWith("s")) {
-                itemZip = item.substring(0, item.length - 1);
-
+            if (item == "") {
+                $("#error1").text(" Item is required");
             } else {
-                itemZip = item;
+                valid1 = true;
+                $("#error1").text("");
             }
 
-            itemZip += "_" + zipCode;
+            if (quantity == "") {
+                $("#error2").text(" Quantity is required");
+            } else {
+                valid2 = true;
+                $("#error2").text("");
+            }
 
+            if (street == "") {
+                $("#error3").text(" Street is required");
+            } else {
+                valid3 = true;
+                $("#error3").text("");
+            }
 
-            // Input to firebase
-            var newListing = firebase.database().ref("listings").push({
-                item: item,
-                quantity: quantity,
-                street: street,
-                zipCode: zipCode,
-                date: date,
-                uid: currentUser.uid,
-                itemZip: itemZip
+            if (zipCode == "") {
+                $("#error4").text(" Zip Code is required");
+            } else if (isNaN(zipCode)) {
+                $("#error4").text(" Incorrect format");
+            } else if (zipCode.length != 5) {
+                $("#error4").text(" Must be 5 digits");
+            } else {
+                valid4 = true;
+                $("#error4").text("");
+            }
 
-            });
+            if (date == "") {
+                $("#error5").text(" Date is required");
+            } else if (date.indexOf("/") != 2 || date.lastIndexOf("/") != 5) {
+                $("#error5").text(" Incorrect format");
+            } else {
+                valid5 = true;
+                $("#error5").text("");
+            }
 
-            var geocoder = new google.maps.Geocoder();
+            if (valid1 && valid2 && valid3 && valid4 && valid5) {
+                item = item.toLowerCase();
 
-            geocoder.geocode({ 'address': street + zipCode }, function(results, status) {
-                if (status !== google.maps.GeocoderStatus.OK) {
-                    console.log("Geocode was not successful for the following reason: " + status);
+                var itemZip = "";
+                
+                //remove "s" from item name
+                if (item.endsWith("s")) {
+                    itemZip = item.substring(0, item.length - 1);
+
                 } else {
-                    var latitude = results[0].geometry.location.lat();
-                    var longitude = results[0].geometry.location.lng();
-
-                    firebase.database().ref("listings").child(newListing.key).update({
-                        lat: latitude,
-                        long: longitude
-                    })
+                    itemZip = item;
                 }
-            });
 
-            //add new listing to items list on firebase
-            firebase.database().ref("items").child(item).push(newListing.key);
+                itemZip += "_" + zipCode;
 
-            $('#addListing').modal('hide');
 
-            displayListings();
+                // Input to firebase
+                var newListing = firebase.database().ref("listings").push({
+                    item: item,
+                    quantity: quantity,
+                    street: street,
+                    zipCode: zipCode,
+                    date: date,
+                    uid: currentUser.uid,
+                    itemZip: itemZip
+
+                });
+
+                var geocoder = new google.maps.Geocoder();
+
+                geocoder.geocode({ 'address': street + zipCode }, function(results, status) {
+                    if (status !== google.maps.GeocoderStatus.OK) {
+                        console.log("Geocode was not successful for the following reason: " + status);
+                    } else {
+                        var latitude = results[0].geometry.location.lat();
+                        var longitude = results[0].geometry.location.lng();
+
+                        firebase.database().ref("listings").child(newListing.key).update({
+                            lat: latitude,
+                            long: longitude
+                        })
+                    }
+                });
+
+                //add new listing to items list on firebase
+                firebase.database().ref("items").child(item).push(newListing.key);
+
+                $('#addListing').modal('hide');
+
+                displayListings();
+            }
         });
 
         var listingId;
@@ -226,46 +279,95 @@
             var street = $("#street").val();
             var zipCode = $("#zip-code").val();
             var date = $("#date").val();
-            item = item.toLowerCase();
-            
-            var itemZip = "";
-            
-            //remove "s" from item name
-            if (item.endsWith("s")) {
-                itemZip = item.substring(0, item.length - 1);
+            var valid1 = false;
+            var valid2 = false;
+            var valid3 = false;
+            var valid4 = false;
+            var valid5 = false;
 
+            if (item == "") {
+                $("#error1").text(" Item is required");
             } else {
-                itemZip = item;
+                valid1 = true;
+                $("#error1").text("");
             }
 
-            itemZip += "_" + zipCode;
-            // update listing in firebase
-            firebase.database().ref("listings").child(listingId).update({
-                item: item,
-                quantity: quantity,
-                street: street,
-                zipCode: zipCode,
-                date: date,
-                itemZip: itemZip
-            });
-            var geocoder = new google.maps.Geocoder();
-            
-            geocoder.geocode({ 'address': street + zipCode }, function(results, status) {
-                if (status !== google.maps.GeocoderStatus.OK) {
-                    console.log("Geocode was not successful for the following reason: " + status);
+            if (quantity == "") {
+                $("#error2").text(" Quantity is required");
+            } else {
+                valid2 = true;
+                $("#error2").text("");
+            }
+
+            if (street == "") {
+                $("#error3").text(" Street is required");
+            } else {
+                valid3 = true;
+                $("#error3").text("");
+            }
+
+            if (zipCode == "") {
+                $("#error4").text(" Zip Code is required");
+            } else if (isNaN(zipCode)) {
+                $("#error4").text(" Incorrect format");
+            } else if (zipCode.length != 5) {
+                $("#error4").text(" Must be 5 digits");
+            } else {
+                valid4 = true;
+                $("#error4").text("");
+            }
+
+            if (date == "") {
+                $("#error5").text(" Date is required");
+            } else if (date.indexOf("/") != 2 || date.lastIndexOf("/") != 5) {
+                $("#error5").text(" Incorrect format");
+            } else {
+                valid5 = true;
+                $("#error5").text("");
+            }
+
+            if (valid1 && valid2 && valid3 && valid4 && valid5) {
+                item = item.toLowerCase();
+                
+                var itemZip = "";
+                
+                //remove "s" from item name
+                if (item.endsWith("s")) {
+                    itemZip = item.substring(0, item.length - 1);
+
                 } else {
-                    var latitude = results[0].geometry.location.lat();
-                    var longitude = results[0].geometry.location.lng();
-
-                    firebase.database().ref("listings").child(listingId).update({
-                        lat: latitude,
-                        long: longitude
-                    })
+                    itemZip = item;
                 }
-            });
-            $('#addListing').modal('hide');
 
-            displayListings();
+                itemZip += "_" + zipCode;
+                // update listing in firebase
+                firebase.database().ref("listings").child(listingId).update({
+                    item: item,
+                    quantity: quantity,
+                    street: street,
+                    zipCode: zipCode,
+                    date: date,
+                    itemZip: itemZip
+                });
+                var geocoder = new google.maps.Geocoder();
+                
+                geocoder.geocode({ 'address': street + zipCode }, function(results, status) {
+                    if (status !== google.maps.GeocoderStatus.OK) {
+                        console.log("Geocode was not successful for the following reason: " + status);
+                    } else {
+                        var latitude = results[0].geometry.location.lat();
+                        var longitude = results[0].geometry.location.lng();
+
+                        firebase.database().ref("listings").child(listingId).update({
+                            lat: latitude,
+                            long: longitude
+                        })
+                    }
+                });
+                $('#addListing').modal('hide');
+
+                displayListings();
+            }
         });
 
         // clear form 
@@ -275,6 +377,11 @@
             $("#street").val("");
             $("#zip-code").val("");
             $("#date").val("");
+            $("#error1").text("");
+            $("#error2").text("");
+            $("#error3").text("");
+            $("#error4").text("");
+            $("#error5").text("");
         });
 
         // delete listing

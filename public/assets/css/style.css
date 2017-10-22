@@ -303,8 +303,8 @@ body.home {
 	font-size: 6vw;
 	font-weight: bold;
 	text-align: center;
-	position: fixed;
-	bottom: 25%;
+	position: relative;
+	bottom: -2em;
 	-ms-transform: rotate(-10deg); /* IE 9 */
     -webkit-transform: rotate(-10deg); /* Safari */
     transform: rotate(-10deg); /* Standard syntax */

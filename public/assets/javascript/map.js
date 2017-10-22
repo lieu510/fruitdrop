@@ -16,15 +16,16 @@ var geocoder;
 var map;
 var image = "assets/images/peach.png";
 var activeInfoWindow;
+
+
 function initMap() {
     
     geocoder = new google.maps.Geocoder();
-
+    var bounds = new google.maps.LatLngBounds();
     var infoWindowContent = [];
     //<div>Icons made by Twitter from https://www.flaticon.com/ Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/ Creative Commons BY 3.0
     
     var myLatlng1 = new google.maps.LatLng(34.0522, -118.2437);
-    var bounds = new google.maps.LatLngBounds();
     var mapOptions = {
         zoom: 10,
         center: myLatlng1,
@@ -73,7 +74,7 @@ function initMap() {
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
         if (searchZip) {
-            this.setZoom(14);
+            this.setZoom(11);
         } else {
             this.setZoom(10);
         }
@@ -100,9 +101,10 @@ function displayMarkers(items) {
                 var i = dataMakerIndex;
                 var marker = new google.maps.Marker({
                     map: map,
-                    position: { lat: items[i].lat, lng: items[i].long },
+                    position: { lat: items[i].latlng.lat, lng: items[i].latlng.lng },
                     icon: image
                 });
+
                 var infowindow = new google.maps.InfoWindow();
                 // create an infowindow2 
                 var infowindow2 = new google.maps.InfoWindow();
@@ -151,6 +153,7 @@ function displayMarkers(items) {
                 });
             }
         }
+
         return geocodeCallBack;
     }
 }
@@ -270,35 +273,62 @@ if (searchItemStart && searchZip === "") {
 }
 
 
+
 if (searchZip && searchItemStart === "") {
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('zipCode').startAt(searchZip).endAt(searchZip + '\uf8ff');
+    var recentPostsRef = firebase.database().ref('listings');
+
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
-            //display search results table
+            var LatLng = {
+                lat: lat,
+                lng: lng
+            }
+
+            dataSnapshot.forEach(function(childSnapshot) {
+                var a = new google.maps.LatLng(LatLng.lat, LatLng.lng);
+                var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+
+                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b,).toFixed());
+                var newAdd = recentPostsRef.child(childSnapshot.key);
+                newAdd.update({
+                    distance: distance
+                })
+            });
+
+    var distancePostsRef = firebase.database().ref('listings').orderByChild('distance').endAt(41000);
+    distancePostsRef.once('value')
+        .then(function(dataSnapshot){
             displayListingsSearch(dataSnapshot.val());
             displayMarkers(dataSnapshot.val());
-        });
+        })
+    });
 }
 
 //Search Item AND Zip Code
 if (searchItemStart && searchZip) {
 
-    //make search string lower case
+     //make search string lower case
     searchItemStart = searchItemStart.toLowerCase();
+    console.log(searchItemStart);
 
     //make singular
     if (searchItemStart.endsWith("s")) {
         searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
-
     }
+
+
     var searchCombined = searchItemStart + "_" + searchZip;
     var recentPostsRef = firebase.database().ref('listings').orderByChild('itemZip').equalTo(searchCombined).limitToFirst(50);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
+
+            console.log(dataSnapshot.val());
             //display search results table
             displayListingsSearch(dataSnapshot.val());
             displayMarkers(dataSnapshot.val());
         });
+
+
 }
 
 /*

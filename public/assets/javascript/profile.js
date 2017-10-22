@@ -238,9 +238,13 @@
                         var longitude = results[0].geometry.location.lng();
 
                         firebase.database().ref("listings").child(newListing.key).update({
-                            lat: latitude,
-                            long: longitude
+                            latlng: {
+                                lat: latitude,
+                                lng: longitude
+                            }
                         })
+
+
                     }
                 });
 

@@ -137,7 +137,8 @@ body.profile {
 	font-size: 75%;
 }
 
-button.edit-listing, button.delete-listing {
+
+button.edit-listing, button.delete-listing, {
 	background-color: transparent;
 	border: none;
 	color: #000000;

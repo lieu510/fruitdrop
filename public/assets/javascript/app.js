@@ -12,8 +12,30 @@
     var provider = new firebase.auth.GoogleAuthProvider();
     var user;
     // var currentUser;
+    var items = [];
+
 
     $(document).ready(function() {
+
+      var itemsAvailable = firebase.database().ref('listings').orderByChild('item');
+      
+      itemsAvailable.once('value').then(function(dataSnapshot) {
+        //display search results table
+        itemsArr(dataSnapshot.val());
+
+      });
+
+      function itemsArr(listings){
+        for (var listing in listings) {
+          var itemVal = listings[listing].item;
+
+          if (items.lastIndexOf(itemVal) < 0) {
+            items.push(itemVal);
+          }
+          
+        }
+      };
+
 
       function login() {
         firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -65,6 +87,12 @@
 
         window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
       });
+    });
+
+    $( "#search-item" ).autocomplete({
+      minLength:2,   
+      delay:500,   
+      source: items
     });
 
 

@@ -5,10 +5,15 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<link rel="stylesheet" type="text/css" href="assets/css/bootstrap-4.0.0-beta-dist/css/bootstrap.css">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|PT+Sans+Narrow|Sacramento" rel="stylesheet">
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
 	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
     <script src="assets/javascript/jquery-3.2.1.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.19.0/moment.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <!-- jQuery CDN -->
+    <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+    <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
 </head>
 <body class="profile">
     <!-- NAVIGATION -->
@@ -47,23 +52,23 @@
                 <div class="modal-body">
                     <form>
                         <div class="form-group">
-                            <label for="bidder-name">Item</label>
+                            <label for="bidder-name">Item</label><span id="error1"></span>
                             <input class="form-control" id="item" type="text">
                         </div>
                         <div class="form-group">
-                                <label for="bidder-name">Quantity</label>
+                                <label for="bidder-name">Quantity</label><span id="error2"></span>
                                 <input class="form-control" id="quantity" type="number">
                             </div>
                         <div class="form-group">
-                            <label for="bidder-price">Street</label>
+                            <label for="bidder-price">Street</label><span id="error3"></span>
                             <input class="form-control" id="street" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="bidder-price">Zip Code</label>
+                            <label for="bidder-price">Zip Code</label><span id="error4"></span>
                             <input class="form-control" id="zip-code" type="text">
                         </div>
                         <div class="form-group">
-                            <label for="bidder-price">Date Available (MM/DD/YY)</label>
+                            <label for="bidder-price">Date Available (MM/DD/YY)</label><span id="error5"></span>
                             <input class="form-control" id="date" type="text">
                         </div>
                     </form>

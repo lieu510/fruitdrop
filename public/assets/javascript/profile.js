@@ -80,7 +80,8 @@
                         "</td><td><button class='delete-listing' data-id='" + childSnapshot.key + "'>Delete</button>" +
                         "</td></tr>"
                     );
-                }
+                             
+                      }
             });
         }
         // display another user's profile
@@ -106,13 +107,14 @@
                     snapshot.forEach(function(childSnapshot) {
                         // check children apply to current user
                         if (childSnapshot.child('uid').val() === currentUser.uid) {
+                       
                             var startTime = moment(childSnapshot.val().date, "MM/DD/YY").format("YYYYMMDD");
                             var location = childSnapshot.val().street + " " + childSnapshot.val().zipCode;
                             var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + childSnapshot.val().item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + childSnapshot.val().date + "</a>";
                             //add to profile
                             $("#listings").append("<tr><td>" + childSnapshot.val().item +
                                 "</td><td>" + childSnapshot.val().quantity +
-                                "</td><td>" + location +
+                                "</td><td><a href='map.html?searchItem=&searchZip=" + childSnapshot.val().zipCode + "'>" + location + "</a>" +
                                 "</td><td>" + calendarLink + "</td></tr>"
                             );
                         }
@@ -363,8 +365,10 @@
                         var longitude = results[0].geometry.location.lng();
 
                         firebase.database().ref("listings").child(listingId).update({
-                            lat: latitude,
-                            long: longitude
+                            latlng: {
+                                lat: latitude,
+                                lng: longitude
+                            }
                         })
                     }
                 });
@@ -418,17 +422,18 @@
         $(document).on("click", "#fb-share", function() {
             FB.ui({
                 method: 'share',
-                href: 'https://gracepark.github.io/fruitdrop/public/profile.html?uid=' + currentUser.uid,
+                href: 'https://fruitdrop.us/profile.html?uid=' + currentUser.uid,
             }, function(response) {});
         });
 
-        (function(d, s, id) {
-            var js, fjs = d.getElementsByTagName(s)[0];
-            if (d.getElementById(id)) return;
-            js = d.createElement(s);
-            js.id = id;
-            js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=303697393443959";
-            fjs.parentNode.insertBefore(js, fjs);
-        }(document, 'script', 'facebook-jssdk'));
+(function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s);
+    js.id = id;
+    js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.10&appId=303697393443959";
+    fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+   
+});
 
-    });

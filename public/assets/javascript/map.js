@@ -245,9 +245,11 @@ SEARCH
 var searchItemStart = getUrlParameter('searchItem');
 // var searchItemEnd = "";
 var searchZip = getUrlParameter('searchZip');
+var searchRadius = getUrlParameter('searchRadius');
 
 var lat = '';
 var lng = '';
+
 
 if (searchItemStart && searchZip === "") {
 
@@ -272,9 +274,7 @@ if (searchItemStart && searchZip === "") {
         });
 }
 
-
-
-if (searchZip && searchItemStart === "") {
+if (searchZip && searchItemStart === "" && searchRadius) {
     var listingsObj = {};
     var recentPostsRef = firebase.database().ref('listings');
 
@@ -289,29 +289,20 @@ if (searchZip && searchItemStart === "") {
                 var a = new google.maps.LatLng(LatLng.lat, LatLng.lng);
                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b,).toFixed());
-                if (distance <= 10000) {
+                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b).toFixed());
+                if (distance <= searchRadius) {
                     listingsObj[childSnapshot.key] = childSnapshot.val();
                 }
-                // var newAdd = recentPostsRef.child(childSnapshot.key);
-                // newAdd.update({
-                //     distance: distance
-                // })
+
             });
-            console.log(listingsObj);
             displayListingsSearch(listingsObj);
             displayMarkers(listingsObj);
-            // var distancePostsRef = firebase.database().ref('listings').orderByChild('distance').endAt(41000);
-            // distancePostsRef.once('value')
-            //     .then(function(dataSnapshot){
-            //         displayListingsSearch(dataSnapshot.val());
-            //         displayMarkers(dataSnapshot.val());
-            //     })
+
         });
 }
 
 //Search Item AND Zip Code
-if (searchItemStart && searchZip) {
+if (searchItemStart && searchZip && searchRadius) {
 
      //make search string lower case
     searchItemStart = searchItemStart.toLowerCase();
@@ -323,8 +314,6 @@ if (searchItemStart && searchZip) {
     }
     var searchItemEnd = searchItemStart + "\uf8ff";
     var listingsObj = {};
-    // var searchCombined = searchItemStart + "_" + searchZip;
-    // var recentPostsRef = firebase.database().ref('listings').orderByChild('itemZip').equalTo(searchCombined).limitToFirst(50);
     var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
     recentPostsRef.once('value')
         .then(function(dataSnapshot) {
@@ -338,22 +327,16 @@ if (searchItemStart && searchZip) {
                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b,).toFixed());
-                if (distance <= 10000) {
+
+                if (distance <= searchRadius) {
                     listingsObj[childSnapshot.key] = childSnapshot.val();
                 }
-                // var newAdd = recentPostsRef.child(childSnapshot.key);
-                // newAdd.update({
-                //     distance: distance
-                // })
+                
+
             });
-            console.log(listingsObj);
+            // console.log(listingsObj);
             displayListingsSearch(listingsObj);
             displayMarkers(listingsObj);
-
-            // console.log(dataSnapshot.val());
-            // //display search results table
-            // displayListingsSearch(dataSnapshot.val());
-            // displayMarkers(dataSnapshot.val());
         });
 
 
@@ -362,14 +345,13 @@ if (searchItemStart && searchZip) {
 /*
 EVENT LISTENERS
 */
-
 //link to map.html page with search parameters
 $("#search-button").on("click", function() {
     event.preventDefault();
     var searchItem = $("#search-item").val();
     var searchZipCode = $("#search-zip").val();
-
-    window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
+    var searchRadius = $("#search-radius").val() * 1609.34;
+    window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode + "&searchRadius=" + searchRadius;
 });
 
 //link to profile for the listing's owner

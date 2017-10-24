@@ -84,8 +84,8 @@
         event.preventDefault();
         var searchItem = $("#search-item").val();
         var searchZipCode = $("#search-zip").val();
-
-        window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode;
+        var searchRadius = $("#search-radius").val() * 1609.34;
+        window.location = "map.html?searchItem=" + searchItem + "&searchZip=" + searchZipCode + "&searchRadius=" + searchRadius;;
       });
     });
 

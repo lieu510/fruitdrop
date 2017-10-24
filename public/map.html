@@ -39,13 +39,22 @@
 	<!--MAIN PAGE CONTENT-->
 	<div class="container-fluid">
 		<div class="row justify-content-center search-row">
-			<div class="col-md-4 col-sm-4 col-4" id="search">
+			<div class="col-md-3 col-sm-3 col-4" id="search">
 				<input class="search-input" type="text" name="search-produce" id="search-item" placeholder="Search Produce">
 			</div>
-			<div class="col-md-4 col-sm-4 col-4" id="search">
+			<div class="col-md-3 col-sm-3 col-4" id="search">
 				<input class="search-input" type="text" name="search-zip-code" id="search-zip" placeholder="Zip Code">
 			</div>
-			<div class="col-md-3 col-sm-3 col-3 text-center" id="search">
+			<div class="col-md-2 col-sm-3 col-4 dropdown" id="search">
+				<select name="radius" id="search-radius">
+					<option value="50" selected>Distance in Miles</option>
+				  	<option value="5">5</option>
+				  	<option value="10">10</option>
+				  	<option value="25">25</option>
+				  	<option value="50">50</option>
+				</select>
+			</div>
+			<div class="col-md-2 col-sm-3 col-3 text-center" id="search">
 				<button class="btn btn-primary" id="search-button">Search</button>
 			</div>
 		</div>

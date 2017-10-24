@@ -115,6 +115,19 @@ div.collapse.navbar-collapse.justify-content-end {
 	letter-spacing: 0px;
 }
 
+select#search-radius {
+	padding: 0.5rem 0.75rem;
+    margin-right: 0.5rem;
+    font-size: 1rem;
+    height: 2.4rem;
+    color: grey;
+    background-color: #fff;
+    background-image: none;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 0, 0, 0.15);
+    transition: border-color ease-in-out 0.15s, box-shadow ease-in-out 0.15s;
+}
+
 /*Profile Page*/
 
 body.profile {
@@ -269,8 +282,8 @@ body.home {
 	border: 1px solid #f55859;
 }
 
-.home #search.col-md-3 {
-	max-width: 10%;
+.home #search {
+	max-width: 25%;
 }
 
 .home .search-input {
@@ -292,6 +305,17 @@ body.home {
     font-weight: 300;
     width: 100%;
     height: 45px;
+}
+
+.home select#search-radius {
+	padding-left: 1em;
+    font-weight: 300;
+    width: 100%;
+    height: 45px;
+    border: 1px solid grey;
+    border-radius: 0.25rem;
+    color: grey;
+    background-color: transparent;
 }
 
 .home .search-row {
@@ -346,8 +370,15 @@ body.map {
 	width: 6em;
 }
 
-.map #search.col-md-3 {
-	max-width: 10%;
+.map select#search-radius {
+	padding-left: 1em;
+    margin: 10px 0px 10px 0px;
+    font-weight: 300;
+    font-size: 1.5vw;
+    width: 100%;
+    height: 50px;
+    border-radius: 0.25rem;
+    border: 1px solid rgba(0, 0, 0, 0.15);
 }
 
 .map div.map {

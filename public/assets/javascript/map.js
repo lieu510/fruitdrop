@@ -182,17 +182,10 @@ function displayListingsSearch(listings) {
     $("#listings-table").show();
 
     var pageNum = 1;
-    var listingCount = 0;
+    var listingCount = 1;
     var pageClass = "";
     for (var listing in listings) {
-        //increase listing counter
-        listingCount++;
-        //group pages into groups of 10 listings
-        if (listingCount % 10 === 0) {
-            //increment page count
-            pageNum++;
-
-        }
+        
         var startTime = moment(listings[listing].date, "MM/DD/YY").format("YYYYMMDD");
         var location = listings[listing].street + " " + listings[listing].zipCode;
         var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + listings[listing].item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + listings[listing].date + "</a>";
@@ -204,6 +197,15 @@ function displayListingsSearch(listings) {
             "</td><td><button class='view-profile' data-id='" + listings[listing].uid + "'>View</button>" +
             "</td></tr>"
         );
+
+                //group pages into groups of 10 listings
+        if (listingCount % 10 === 0) {
+            //increment page count
+            pageNum++;
+
+        }
+        //increase listing counter
+        listingCount++;
     }
     // Pagination - Previous page
     $("#search-pagination").append("<li class='page-item disabled' id='pagination-previous'><div class='page-link' tabindex='-1'>Previous</div></li>");
@@ -211,8 +213,8 @@ function displayListingsSearch(listings) {
     //Pagination - navigation items
     for (var page = 1; page <= pageNum; page++) {
         //hide all pages after the page 1
-        if (pageNum !== 1) {
-            pageClass = ".page-num-" + pageNum;
+        if (page !== 1) {
+            pageClass = ".page-num-" + page;
             $(pageClass).hide();
         }
 

@@ -17,6 +17,25 @@ var map;
 var image = "assets/images/peach.png";
 var activeInfoWindow;
 
+function getUrlParameter(sParam) {
+    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
+        sURLVariables = sPageURL.split('&'),
+        sParameterName,
+        i;
+
+    for (i = 0; i < sURLVariables.length; i++) {
+        sParameterName = sURLVariables[i].split('=');
+
+        if (sParameterName[0] === sParam) {
+            return sParameterName[1] === undefined ? true : sParameterName[1];
+        }
+    }
+};
+
+var searchItemStart = getUrlParameter('searchItem');
+var searchZip = getUrlParameter('searchZip');
+var searchRadius = getUrlParameter('searchRadius');
+
 
 function initMap() {
     
@@ -24,7 +43,6 @@ function initMap() {
     var bounds = new google.maps.LatLngBounds();
     var infoWindowContent = [];
     //<div>Icons made by Twitter from https://www.flaticon.com/ Flaticon is licensed by http://creativecommons.org/licenses/by/3.0/ Creative Commons BY 3.0
-    
     var myLatlng1 = new google.maps.LatLng(34.0522, -118.2437);
     var mapOptions = {
         zoom: 10,
@@ -34,52 +52,162 @@ function initMap() {
 
     // Display a map on the page
     map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    var lat;
+    var lng;
+    var mapCenter;
 
-    // Geolocation
-    if (searchZip) {
-        geocoder.geocode({ 'address': searchZip }, function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                lat = results[0].geometry.location.lat();
-                lng = results[0].geometry.location.lng();
-                map.setCenter(new google.maps.LatLng(lat, lng));
-            } else {
-                alert("Geocode was not successful for the following reason: " + status);
-            }
-        });
-    } else if (navigator.geolocation) {
+    if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function(position) {
-            initialLocation = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            map.setCenter(initialLocation);
+            mapCenter = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            map.setCenter(mapCenter);
         });
     } else {
         map.setCenter(myLatlng1);
     }
-
-    if (!searchZip && !searchItemStart) {
-        // Get the addresses from Firebase and push to an array
-        var dataMaker = [];
-
-        firebase.database().ref("listings").on("value", function(snapshot) {
-            displayListingsSearch(snapshot.val());
-            snapshot.forEach(function(childSnapshot) {
-
-                var add = childSnapshot.val();
-                dataMaker.push(add);
-
-            });
-            displayMarkers(dataMaker);
-        });
-    }
     
     // Override our map zoom level once our fitBounds function runs (Make sure it only runs once)
     var boundsListener = google.maps.event.addListener((map), 'bounds_changed', function(event) {
-        if (searchZip) {
+        if (searchRadius < 10000 ) {
+            this.setZoom(12);
+        } else if (searchRadius >= 10000 && searchRadius < 20000 ) {
             this.setZoom(11);
-        } else {
+        } else if (searchRadius >= 20000 && searchRadius < 50000 ) {
             this.setZoom(10);
+        } else if (searchRadius >= 50000 ) {
+            this.setZoom(9);
         }
         google.maps.event.removeListener(boundsListener);
     });
+/*
+SEARCH
+*/
+    if (!searchZip && !searchItemStart) { // No Item or Zip Code
+        
+        firebase.database().ref("listings").on("value", function(snapshot) {
+            displayListingsSearch(snapshot.val());
+            displayMarkers(snapshot.val());
+        });
+    } else if (searchItemStart && searchZip && searchRadius) { // Search Item and Zip Code
+        geocoder.geocode({ 'address': searchZip }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                lat = results[0].geometry.location.lat();
+                lng = results[0].geometry.location.lng();
+                mapCenter = new google.maps.LatLng(lat, lng);
+                map.setCenter(mapCenter);
+            } else {
+                console.log("Geocode Coords was not successful for the following reason: " + status);
+            }
+        });
+        //make search string lower case
+        searchItemStart = searchItemStart.toLowerCase();
+
+        //make singular
+        if (searchItemStart.endsWith("s")) {
+            searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
+        }
+        var searchItemEnd = searchItemStart + "\uf8ff";
+        var listingsObj = {};
+        var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
+        recentPostsRef.once('value')
+            .then(function(dataSnapshot) {
+
+                dataSnapshot.forEach(function(childSnapshot) {
+
+                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+
+                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+
+                    if (distance <= searchRadius) {
+                        listingsObj[childSnapshot.key] = childSnapshot.val();
+                    }
+                    
+
+                });
+                displayListingsSearch(listingsObj);
+                displayMarkers(listingsObj);
+            }).catch(function(err) {
+                dataSnapshot.forEach(function(childSnapshot) {
+
+                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+
+                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                    if (distance <= searchRadius) {
+                        listingsObj[childSnapshot.key] = childSnapshot.val();
+                    }
+
+                });
+                displayListingsSearch(listingsObj);
+                displayMarkers(listingsObj);
+            });
+    } else if (searchZip && searchItemStart === "" && searchRadius) { // Search Zip Code only
+        geocoder.geocode({ 'address': searchZip }, function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                lat = results[0].geometry.location.lat();
+                lng = results[0].geometry.location.lng();
+                mapCenter = new google.maps.LatLng(lat, lng);
+                map.setCenter(mapCenter);
+            } else {
+                console.log("Geocode Coords was not successful for the following reason: " + status);
+            }
+        });
+        var listingsObj = {};
+        var recentPostsRef = firebase.database().ref('listings');
+
+        recentPostsRef.once('value')
+            .then(function(dataSnapshot) {
+
+                dataSnapshot.forEach(function(childSnapshot) {
+
+                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+
+                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                    if (distance <= searchRadius) {
+                        console.log(childSnapshot.val());
+                        listingsObj[childSnapshot.key] = childSnapshot.val();
+                    }
+
+                });
+                console.log(listingsObj);
+                displayListingsSearch(listingsObj);
+                displayMarkers(listingsObj);
+
+            }).catch(function(err) {
+                dataSnapshot.forEach(function(childSnapshot) {
+
+                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+
+                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                    if (distance <= searchRadius) {
+                        listingsObj[childSnapshot.key] = childSnapshot.val();
+                    }
+
+                });
+                displayListingsSearch(listingsObj);
+                displayMarkers(listingsObj);
+            });
+    } else if (searchItemStart && searchZip === "") { // Search Item only
+
+        //make search string lower case
+        searchItemStart = searchItemStart.toLowerCase();
+
+        //make singular
+        if (searchItemStart.endsWith("s")) {
+            searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
+
+        }
+
+        //add search ending string
+        var searchItemEnd = searchItemStart + "\uf8ff";
+
+        var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
+        recentPostsRef.once('value')
+
+            .then(function(dataSnapshot) {
+                //display search results table
+                displayListingsSearch(dataSnapshot.val());
+                displayMarkers(dataSnapshot.val());
+            })
+    }
 }
 function displayMarkers(items) {
     
@@ -96,7 +224,7 @@ function displayMarkers(items) {
             var geocodeCallBack = function(results, status) {
 
             if (status !== google.maps.GeocoderStatus.OK) {
-                console.log("Geocode was not successful for the following reason: " + status);
+                console.log("Geocode callback was not successful for the following reason: " + status);
             } else {
                 var i = dataMakerIndex;
                 var marker = new google.maps.Marker({
@@ -157,21 +285,6 @@ function displayMarkers(items) {
         return geocodeCallBack;
     }
 }
-
-function getUrlParameter(sParam) {
-    var sPageURL = decodeURIComponent(window.location.search.substring(1)),
-        sURLVariables = sPageURL.split('&'),
-        sParameterName,
-        i;
-
-    for (i = 0; i < sURLVariables.length; i++) {
-        sParameterName = sURLVariables[i].split('=');
-
-        if (sParameterName[0] === sParam) {
-            return sParameterName[1] === undefined ? true : sParameterName[1];
-        }
-    }
-};
 
 var paginationMax = 0;
 
@@ -239,110 +352,6 @@ function displayListingsSearch(listings) {
 };
 
 
-
-/*
-SEARCH
-*/
-
-var searchItemStart = getUrlParameter('searchItem');
-// var searchItemEnd = "";
-var searchZip = getUrlParameter('searchZip');
-var searchRadius = getUrlParameter('searchRadius');
-
-var lat = '';
-var lng = '';
-
-
-if (searchItemStart && searchZip === "") {
-
-    //make search string lower case
-    searchItemStart = searchItemStart.toLowerCase();
-
-    //make singular
-    if (searchItemStart.endsWith("s")) {
-        searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
-
-    }
-
-    //add search ending string
-    var searchItemEnd = searchItemStart + "\uf8ff";
-
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
-    recentPostsRef.once('value')
-        .then(function(dataSnapshot) {
-            //display search results table
-            displayListingsSearch(dataSnapshot.val());
-            displayMarkers(dataSnapshot.val());
-        });
-}
-
-if (searchZip && searchItemStart === "" && searchRadius) {
-    var listingsObj = {};
-    var recentPostsRef = firebase.database().ref('listings');
-
-    recentPostsRef.once('value')
-        .then(function(dataSnapshot) {
-            var LatLng = {
-                lat: lat,
-                lng: lng
-            }
-
-            dataSnapshot.forEach(function(childSnapshot) {
-                var a = new google.maps.LatLng(LatLng.lat, LatLng.lng);
-                var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
-                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b).toFixed());
-                if (distance <= searchRadius) {
-                    listingsObj[childSnapshot.key] = childSnapshot.val();
-                }
-
-            });
-            displayListingsSearch(listingsObj);
-            displayMarkers(listingsObj);
-
-        });
-}
-
-//Search Item AND Zip Code
-if (searchItemStart && searchZip && searchRadius) {
-
-     //make search string lower case
-    searchItemStart = searchItemStart.toLowerCase();
-    console.log(searchItemStart);
-
-    //make singular
-    if (searchItemStart.endsWith("s")) {
-        searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
-    }
-    var searchItemEnd = searchItemStart + "\uf8ff";
-    var listingsObj = {};
-    var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
-    recentPostsRef.once('value')
-        .then(function(dataSnapshot) {
-            var LatLng = {
-                lat: lat,
-                lng: lng
-            }
-
-            dataSnapshot.forEach(function(childSnapshot) {
-                var a = new google.maps.LatLng(LatLng.lat, LatLng.lng);
-                var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
-                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(a,b,).toFixed());
-
-                if (distance <= searchRadius) {
-                    listingsObj[childSnapshot.key] = childSnapshot.val();
-                }
-                
-
-            });
-            // console.log(listingsObj);
-            displayListingsSearch(listingsObj);
-            displayMarkers(listingsObj);
-        });
-
-
-}
 
 /*
 EVENT LISTENERS

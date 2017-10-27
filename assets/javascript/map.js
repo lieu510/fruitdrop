@@ -110,32 +110,35 @@ SEARCH
         var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
         recentPostsRef.once('value')
             .then(function(dataSnapshot) {
+                if (mapCenter.lat && mapCenter.lng) {
+                    dataSnapshot.forEach(function(childSnapshot) {
 
-                dataSnapshot.forEach(function(childSnapshot) {
+                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                        if (distance <= searchRadius) {
+                            console.log(childSnapshot.val());
+                            listingsObj[childSnapshot.key] = childSnapshot.val();
+                        }
 
-                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-
-                    if (distance <= searchRadius) {
-                        listingsObj[childSnapshot.key] = childSnapshot.val();
-                    }
-                    
-
-                });
+                    });
+                }
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
             }).then(function(dataSnapshot) {
-                dataSnapshot.forEach(function(childSnapshot) {
+                if (mapCenter.lat && mapCenter.lng) {
+                    dataSnapshot.forEach(function(childSnapshot) {
 
-                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                    if (distance <= searchRadius) {
-                        listingsObj[childSnapshot.key] = childSnapshot.val();
-                    }
+                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                        if (distance <= searchRadius) {
+                            console.log(childSnapshot.val());
+                            listingsObj[childSnapshot.key] = childSnapshot.val();
+                        }
 
-                });
+                    });
+                }
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
             });
@@ -155,33 +158,37 @@ SEARCH
 
         recentPostsRef.once('value')
             .then(function(dataSnapshot) {
+                if (mapCenter.lat && mapCenter.lng) {
+                    dataSnapshot.forEach(function(childSnapshot) {
 
-                dataSnapshot.forEach(function(childSnapshot) {
+                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                        if (distance <= searchRadius) {
+                            console.log(childSnapshot.val());
+                            listingsObj[childSnapshot.key] = childSnapshot.val();
+                        }
 
-                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                    if (distance <= searchRadius) {
-                        console.log(childSnapshot.val());
-                        listingsObj[childSnapshot.key] = childSnapshot.val();
-                    }
-
-                });
+                    });
+                }
                 console.log(listingsObj);
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
 
             }).then(function(dataSnapshot) {
-                dataSnapshot.forEach(function(childSnapshot) {
+                if (mapCenter.lat && mapCenter.lng) {
+                    dataSnapshot.forEach(function(childSnapshot) {
 
-                    var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                    var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                    if (distance <= searchRadius) {
-                        listingsObj[childSnapshot.key] = childSnapshot.val();
-                    }
+                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                        if (distance <= searchRadius) {
+                            console.log(childSnapshot.val());
+                            listingsObj[childSnapshot.key] = childSnapshot.val();
+                        }
 
-                });
+                    });
+                }
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
             });

@@ -125,22 +125,25 @@ SEARCH
                 }
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
-            }).then(function(dataSnapshot) {
-                if (mapCenter) {
-                    dataSnapshot.forEach(function(childSnapshot) {
+            }).then(function() {
+                recentPostsRef.once('value')
+                    .then(function(dataSnapshot) {
+                        if (mapCenter) {
+                            dataSnapshot.forEach(function(childSnapshot) {
 
-                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                                var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                        if (distance <= searchRadius) {
-                            console.log(childSnapshot.val());
-                            listingsObj[childSnapshot.key] = childSnapshot.val();
+                                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                                if (distance <= searchRadius) {
+                                    console.log(childSnapshot.val());
+                                    listingsObj[childSnapshot.key] = childSnapshot.val();
+                                }
+
+                            });
                         }
-
+                        displayListingsSearch(listingsObj);
+                        displayMarkers(listingsObj);
                     });
-                }
-                displayListingsSearch(listingsObj);
-                displayMarkers(listingsObj);
             });
     } else if (searchZip && searchItemStart === "" && searchRadius) { // Search Zip Code only
         geocoder.geocode({ 'address': searchZip }, function(results, status) {
@@ -149,49 +152,74 @@ SEARCH
                 lng = results[0].geometry.location.lng();
                 mapCenter = new google.maps.LatLng(lat, lng);
                 map.setCenter(mapCenter);
+                var listingsObj = {};
+                var recentPostsRef = firebase.database().ref('listings');
+        
+                recentPostsRef.once('value')
+                    .then(function(dataSnapshot) {
+                        if (mapCenter) {
+                            dataSnapshot.forEach(function(childSnapshot) {
+        
+                                var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+        
+                                var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                                if (distance <= searchRadius) {
+                                    console.log(childSnapshot.val());
+                                    listingsObj[childSnapshot.key] = childSnapshot.val();
+                                }
+        
+                            });
+                        }
+                        console.log(listingsObj);
+                        displayListingsSearch(listingsObj);
+                        displayMarkers(listingsObj);
+                    });
             } else {
                 console.log("Geocode Coords was not successful for the following reason: " + status);
             }
         });
-        var listingsObj = {};
-        var recentPostsRef = firebase.database().ref('listings');
+        // var listingsObj = {};
+        // var recentPostsRef = firebase.database().ref('listings');
 
-        recentPostsRef.once('value')
-            .then(function(dataSnapshot) {
-                if (mapCenter) {
-                    dataSnapshot.forEach(function(childSnapshot) {
+        // recentPostsRef.once('value')
+        //     .then(function(dataSnapshot) {
+        //         if (mapCenter) {
+        //             dataSnapshot.forEach(function(childSnapshot) {
 
-                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+        //                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                        if (distance <= searchRadius) {
-                            console.log(childSnapshot.val());
-                            listingsObj[childSnapshot.key] = childSnapshot.val();
-                        }
+        //                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+        //                 if (distance <= searchRadius) {
+        //                     console.log(childSnapshot.val());
+        //                     listingsObj[childSnapshot.key] = childSnapshot.val();
+        //                 }
 
-                    });
-                }
-                console.log(listingsObj);
-                displayListingsSearch(listingsObj);
-                displayMarkers(listingsObj);
+        //             });
+        //         }
+        //         console.log(listingsObj);
+        //         displayListingsSearch(listingsObj);
+        //         displayMarkers(listingsObj);
 
-            }).then(function(dataSnapshot) {
-                if (mapCenter) {
-                    dataSnapshot.forEach(function(childSnapshot) {
+        //     }).then(function() {
+                // recentPostsRef.once('value')
+                //     .then(function(dataSnapshot) {
+                //         if (mapCenter) {
+                //             dataSnapshot.forEach(function(childSnapshot) {
 
-                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
+                //                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
 
-                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                        if (distance <= searchRadius) {
-                            console.log(childSnapshot.val());
-                            listingsObj[childSnapshot.key] = childSnapshot.val();
-                        }
+                //                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
+                //                 if (distance <= searchRadius) {
+                //                     console.log(childSnapshot.val());
+                //                     listingsObj[childSnapshot.key] = childSnapshot.val();
+                //                 }
 
-                    });
-                }
-                displayListingsSearch(listingsObj);
-                displayMarkers(listingsObj);
-            });
+                //             });
+                //         }
+                //         displayListingsSearch(listingsObj);
+                //         displayMarkers(listingsObj);
+                //     });
+            // });
     } else if (searchItemStart && searchZip === "") { // Search Item only
 
         //make search string lower case

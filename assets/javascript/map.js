@@ -260,7 +260,7 @@ function displayMarkers(items) {
                     infowindow.close();
                 });
 
-                var userProfile = "http://fruitdrop.us/profile.html?uid=" + items[i].uid;
+                var userProfile = "profile.html?uid=" + items[i].uid;
 
                 infowindow2.setContent('<h3 class="mapInfo">' + items[i].item + '</h3>' + '<p style="text-align: center">View Details: </p>' + 'You can find all the details to pick up your produce today by visiting the <a style="color: #f55859" href="' + userProfile +
                     '">User Profile</a>');

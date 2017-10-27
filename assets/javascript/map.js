@@ -110,7 +110,7 @@ SEARCH
         var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
         recentPostsRef.once('value')
             .then(function(dataSnapshot) {
-                if (mapCenter.lat && mapCenter.lng) {
+                if (mapCenter) {
                     dataSnapshot.forEach(function(childSnapshot) {
 
                         var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
@@ -126,7 +126,7 @@ SEARCH
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
             }).then(function(dataSnapshot) {
-                if (mapCenter.lat && mapCenter.lng) {
+                if (mapCenter) {
                     dataSnapshot.forEach(function(childSnapshot) {
 
                         var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
@@ -158,7 +158,7 @@ SEARCH
 
         recentPostsRef.once('value')
             .then(function(dataSnapshot) {
-                if (mapCenter.lat && mapCenter.lng) {
+                if (mapCenter) {
                     dataSnapshot.forEach(function(childSnapshot) {
 
                         var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
@@ -176,7 +176,7 @@ SEARCH
                 displayMarkers(listingsObj);
 
             }).then(function(dataSnapshot) {
-                if (mapCenter.lat && mapCenter.lng) {
+                if (mapCenter) {
                     dataSnapshot.forEach(function(childSnapshot) {
 
                         var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);

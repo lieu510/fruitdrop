@@ -125,7 +125,7 @@ SEARCH
                 });
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
-            }).catch(function(err) {
+            }).then(function(dataSnapshot) {
                 dataSnapshot.forEach(function(childSnapshot) {
 
                     var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
@@ -171,7 +171,7 @@ SEARCH
                 displayListingsSearch(listingsObj);
                 displayMarkers(listingsObj);
 
-            }).catch(function(err) {
+            }).then(function(dataSnapshot) {
                 dataSnapshot.forEach(function(childSnapshot) {
 
                     var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);

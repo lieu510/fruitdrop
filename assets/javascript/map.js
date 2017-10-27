@@ -94,57 +94,38 @@ SEARCH
                 lng = results[0].geometry.location.lng();
                 mapCenter = new google.maps.LatLng(lat, lng);
                 map.setCenter(mapCenter);
-            } else {
-                console.log("Geocode Coords was not successful for the following reason: " + status);
-            }
-        });
-        //make search string lower case
+                //make search string lower case
         searchItemStart = searchItemStart.toLowerCase();
-
-        //make singular
-        if (searchItemStart.endsWith("s")) {
-            searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
-        }
-        var searchItemEnd = searchItemStart + "\uf8ff";
-        var listingsObj = {};
-        var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
-        recentPostsRef.once('value')
-            .then(function(dataSnapshot) {
-                if (mapCenter) {
-                    dataSnapshot.forEach(function(childSnapshot) {
-
-                        var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
-                        var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                        if (distance <= searchRadius) {
-                            console.log(childSnapshot.val());
-                            listingsObj[childSnapshot.key] = childSnapshot.val();
-                        }
-
-                    });
+        
+                //make singular
+                if (searchItemStart.endsWith("s")) {
+                    searchItemStart = searchItemStart.substring(0, searchItemStart.length - 1);
                 }
-                displayListingsSearch(listingsObj);
-                displayMarkers(listingsObj);
-            }).then(function() {
+                var searchItemEnd = searchItemStart + "\uf8ff";
+                var listingsObj = {};
+                var recentPostsRef = firebase.database().ref('listings').orderByChild('item').startAt(searchItemStart).endAt(searchItemEnd).limitToFirst(50);
                 recentPostsRef.once('value')
                     .then(function(dataSnapshot) {
                         if (mapCenter) {
                             dataSnapshot.forEach(function(childSnapshot) {
-
+        
                                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
+        
                                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
                                 if (distance <= searchRadius) {
                                     console.log(childSnapshot.val());
                                     listingsObj[childSnapshot.key] = childSnapshot.val();
                                 }
-
+        
                             });
                         }
                         displayListingsSearch(listingsObj);
                         displayMarkers(listingsObj);
                     });
-            });
+            } else {
+                console.log("Geocode Coords was not successful for the following reason: " + status);
+            }
+        });
     } else if (searchZip && searchItemStart === "" && searchRadius) { // Search Zip Code only
         geocoder.geocode({ 'address': searchZip }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
@@ -178,48 +159,6 @@ SEARCH
                 console.log("Geocode Coords was not successful for the following reason: " + status);
             }
         });
-        // var listingsObj = {};
-        // var recentPostsRef = firebase.database().ref('listings');
-
-        // recentPostsRef.once('value')
-        //     .then(function(dataSnapshot) {
-        //         if (mapCenter) {
-        //             dataSnapshot.forEach(function(childSnapshot) {
-
-        //                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
-        //                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-        //                 if (distance <= searchRadius) {
-        //                     console.log(childSnapshot.val());
-        //                     listingsObj[childSnapshot.key] = childSnapshot.val();
-        //                 }
-
-        //             });
-        //         }
-        //         console.log(listingsObj);
-        //         displayListingsSearch(listingsObj);
-        //         displayMarkers(listingsObj);
-
-        //     }).then(function() {
-                // recentPostsRef.once('value')
-                //     .then(function(dataSnapshot) {
-                //         if (mapCenter) {
-                //             dataSnapshot.forEach(function(childSnapshot) {
-
-                //                 var b = new google.maps.LatLng(childSnapshot.val().latlng.lat, childSnapshot.val().latlng.lng);
-
-                //                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
-                //                 if (distance <= searchRadius) {
-                //                     console.log(childSnapshot.val());
-                //                     listingsObj[childSnapshot.key] = childSnapshot.val();
-                //                 }
-
-                //             });
-                //         }
-                //         displayListingsSearch(listingsObj);
-                //         displayMarkers(listingsObj);
-                //     });
-            // });
     } else if (searchItemStart && searchZip === "") { // Search Item only
 
         //make search string lower case

@@ -328,7 +328,7 @@ function displayListingsSearch(listings) {
 EVENT LISTENERS
 */
 //link to map.html page with search parameters
-$("#search-button").on("click", function() {
+$("#search-button").on("click", function(event) {
     event.preventDefault();
     var searchItem = $("#search-item").val();
     var searchZipCode = $("#search-zip").val();
@@ -337,7 +337,7 @@ $("#search-button").on("click", function() {
 });
 
 //link to profile for the listing's owner
-$(document).on("click", ".view-profile", function() {
+$(document).on("click", ".view-profile", function(event) {
     event.preventDefault();
     //obtain profile id of user from listing
     var userID = $(this).attr("data-id");

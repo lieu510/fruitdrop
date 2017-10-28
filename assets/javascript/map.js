@@ -272,7 +272,7 @@ function displayListingsSearch(listings) {
         
         var startTime = moment(listings[listing].date, "MM/DD/YY").format("YYYYMMDD");
         var location = listings[listing].street + " " + listings[listing].zipCode;
-        var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + listings[listing].item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + listings[listing].date + "</a>";
+        var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + listings[listing].item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'><img width='30px' src='assets/images/calendar.png'>" + listings[listing].date + "</a>";
         // add to table
         $("#listings").append("<tr class='page-num-" + pageNum + "'><td>" + listings[listing].item +
             "</td><td>" + listings[listing].quantity +

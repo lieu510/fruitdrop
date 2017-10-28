@@ -1,13 +1,13 @@
 # Fruit Drop
 
 ### About
-![fruitdropscreenshot](public/assets/images/fruitdropscreenshot.png)
+![fruitdropscreenshot](assets/images/fruitdropscreenshot.png)
 
 Fruit Drop is a community for home growers who want to share and trade their fruit and produce. This allows everyone in your neighborhoods to benefit from one another and get fresh, organic produce.
 
 ### Live Link
 
-https://gracepark.github.io/fruitdrop/public/
+https://fruitdrop.us
 
 ### Motivation
 

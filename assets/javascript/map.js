@@ -113,7 +113,6 @@ SEARCH
         
                                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
                                 if (distance <= searchRadius) {
-                                    console.log(childSnapshot.val());
                                     listingsObj[childSnapshot.key] = childSnapshot.val();
                                 }
         
@@ -145,13 +144,11 @@ SEARCH
         
                                 var distance = parseFloat(google.maps.geometry.spherical.computeDistanceBetween(mapCenter,b).toFixed());
                                 if (distance <= searchRadius) {
-                                    console.log(childSnapshot.val());
                                     listingsObj[childSnapshot.key] = childSnapshot.val();
                                 }
         
                             });
                         }
-                        console.log(listingsObj);
                         displayListingsSearch(listingsObj);
                         displayMarkers(listingsObj);
                     });

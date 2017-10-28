@@ -114,7 +114,7 @@
                             //add to profile
                             $("#listings").append("<tr><td>" + childSnapshot.val().item +
                                 "</td><td>" + childSnapshot.val().quantity +
-                                "</td><td><a href='map.html?searchItem=&searchZip=" + childSnapshot.val().zipCode + "'>" + location + "</a>" +
+                                "</td><td><a href='map.html?searchItem=&searchZip=" + childSnapshot.val().zipCode + "&searchRadius=8046.7'>" + location + "</a>" +
                                 "</td><td>" + calendarLink + "</td></tr>"
                             );
                         }

@@ -110,11 +110,11 @@
                        
                             var startTime = moment(childSnapshot.val().date, "MM/DD/YY").format("YYYYMMDD");
                             var location = childSnapshot.val().street + " " + childSnapshot.val().zipCode;
-                            var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + childSnapshot.val().item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'>" + childSnapshot.val().date + "</a>";
+                            var calendarLink = "<a href='http://www.google.com/calendar/render?action=TEMPLATE&text=Fruitdrop: " + childSnapshot.val().item + " available&dates=" + startTime + "/" + startTime + "&location=" + location + "' target='_blank' class='linkButton'><img width='50px' src='assets/images/calendar.png'>" + childSnapshot.val().date + "</a>";
                             //add to profile
                             $("#listings").append("<tr><td>" + childSnapshot.val().item +
                                 "</td><td>" + childSnapshot.val().quantity +
-                                "</td><td><a href='map.html?searchItem=&searchZip=" + childSnapshot.val().zipCode + "'>" + location + "</a>" +
+                                "</td><td><a href='map.html?searchItem=&searchZip=" + childSnapshot.val().zipCode + "&searchRadius=8046.7'>" + location + "</a>" +
                                 "</td><td>" + calendarLink + "</td></tr>"
                             );
                         }

@@ -516,3 +516,35 @@ p.subheading {
 	}
 }
 
+@media screen and (max-width: 960px) {	
+	.map .search-input[type="text"]{
+	    font-size: 2vw;
+	    padding-left: .5em;
+
+	}
+
+	.map select#search-radius {
+
+    font-size: 2vw;
+
+	}
+}
+
+@media screen and (max-width: 640px) {	
+	.map .search-input[type="text"]{
+	    font-size: 3vw;
+	    padding-left: .5em;
+
+	}
+
+	.map .table .tbody {
+	background-color:rgba(255, 255, 255, 0.75);
+}
+
+	.map select#search-radius {
+
+    font-size: 2vw;
+
+	}
+}
+

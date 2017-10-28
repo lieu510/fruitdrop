@@ -80,7 +80,7 @@
       });
       
       //link to map.html page with search parameters
-      $("#search-button").on("click", function() {
+      $("#search-button").on("click", function(event) {
         event.preventDefault();
         var searchItem = $("#search-item").val();
         var searchZipCode = $("#search-zip").val();

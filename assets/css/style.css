@@ -607,10 +607,6 @@ p.subheading {
 	font-size: 2vw;
 }
 
-.faq .container-fluid.content {
-	margin-top: 12em;
-}
-
 .faq div.collapse.navbar-collapse.justify-content-end {
 	margin-bottom: 3.5em;
 }
@@ -657,6 +653,53 @@ p.subheading {
 	background-color: #dfe1e8;
 }
 
+.faq .form-inline {
+	flex-flow: row nowrap;
+}
+
+.faq button.navbar-toggler {
+	margin-bottom: 14em;
+}
+
+.faq ul.navbar-nav {
+	float: right;
+}
+
+.faq .form-control {
+	margin-right: 0.2em;
+}
+
+.faq .my-2 {
+	margin-left: 1em;
+}
+
+@media only screen and (max-width: 640px) {	
+	.navbar-toggler {
+		position: fixed;
+		top: 4em;
+		right: 2em;
+	}
+
+	.faq .form-inline {
+		flex-flow: row wrap;
+	}
+
+	.faq .form-control.ui-autocomplete-input {
+		margin-bottom: 0.5em;
+	}
+}
+
+@media only screen and (max-width: 400px) {
+	.faq a.navbar-brand {
+		font-size: 1.5rem;
+	}
+
+	.navbar-toggler {
+		position: fixed;
+		top: 2em;
+		right: 1em;
+	}
+}
 /*AUTOCOMPLETE CSS OVERWRITE*/
 
 .ui-widget-content a {

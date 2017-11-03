@@ -262,6 +262,11 @@ body.home {
     justify-content: flex-end;  
 }
 
+.home .navbar-nav {
+	margin-right: 1em;
+    margin-top: 1em;
+}
+
 .home a.nav-link {
 	font-size: 2vw;
 }

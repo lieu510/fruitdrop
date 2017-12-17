@@ -1,19 +1,25 @@
 # Fruit Drop
 
-### About
-![fruitdropscreenshot](assets/images/fruitdropscreenshot.png)
+## About
 
 Fruit Drop is a community for home growers who want to share and trade their fruit and produce. This allows everyone in your neighborhoods to benefit from one another and get fresh, organic produce.
+![fruitdropscreenshot](assets/images/landing.png)
 
-### Live Link
+### Search by Item or Location
+![fruitdropscreenshot](assets/images/fruitdropscreenshot.png)
+
+### Create Listings
+![fruitdropscreenshot](assets/images/profile.png)
+
+## Live Link
 
 https://fruitdrop.us
 
-### Motivation
+## Motivation
 
 Neighbors were struggling with over-producing fruit trees in that there was quite a few waste, fruits were rotting on the ground, and it attracted quite a few critters. Fruit Drop was a way to not only solve this problem, it also benefitted the community.
 
-### Installation
+## Installation
 
 All you need is a browser like Chrome and internet access.
 
